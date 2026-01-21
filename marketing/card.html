@@ -18,11 +18,10 @@
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: #ffffff;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 60px 40px;
+            padding: 30px 40px;
             color: #1a1a1a;
         }
 
@@ -33,7 +32,7 @@
 
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 24px;
         }
 
         .intro-label {
@@ -46,26 +45,26 @@
         }
 
         .title {
-            font-size: 64px;
+            font-size: 48px;
             font-weight: 700;
             color: #1a1a1a;
             letter-spacing: -0.03em;
-            margin-bottom: 16px;
+            margin-bottom: 10px;
         }
 
         .tagline {
-            font-size: 18px;
+            font-size: 16px;
             color: #555;
             font-weight: 400;
-            line-height: 1.5;
+            line-height: 1.4;
         }
 
         .terminal {
             background: #1e1e1e;
-            border-radius: 12px;
+            border-radius: 10px;
             overflow: hidden;
-            margin: 40px 0;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
         }
 
         .terminal-header {
@@ -103,10 +102,10 @@
         }
 
         .terminal-content {
-            padding: 24px;
+            padding: 16px 20px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 14px;
-            line-height: 1.8;
+            font-size: 13px;
+            line-height: 1.6;
             color: #e4e4e7;
         }
 
@@ -142,38 +141,38 @@
         .cards-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 20px;
+            gap: 12px;
+            margin-bottom: 12px;
         }
 
         .card {
             background: #ffffff;
             border: 1px solid #e5e5e5;
-            border-radius: 12px;
-            padding: 24px;
+            border-radius: 10px;
+            padding: 16px;
         }
 
         .card-title {
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 600;
             letter-spacing: 0.15em;
             color: #888;
             text-transform: uppercase;
-            margin-bottom: 16px;
+            margin-bottom: 10px;
         }
 
         .tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 6px;
         }
 
         .tag {
-            padding: 6px 14px;
+            padding: 4px 10px;
             background: #ffffff;
             border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            font-size: 13px;
+            border-radius: 5px;
+            font-size: 12px;
             font-weight: 500;
             color: #333;
         }
@@ -181,12 +180,12 @@
         .works-with {
             background: #f9f9f9;
             border: 1px solid #e5e5e5;
-            border-radius: 12px;
-            padding: 20px 32px;
+            border-radius: 10px;
+            padding: 14px 24px;
             display: flex;
             align-items: center;
-            gap: 40px;
-            margin-bottom: 30px;
+            gap: 30px;
+            margin-bottom: 16px;
         }
 
         .works-with-title {
@@ -344,88 +343,34 @@
                 <!-- Cursor -->
                 <div class="tool">
                     <div class="tool-icon">
-                        <img src="https://www.cursor.com/brand/icon.svg" alt="Cursor"
-                            onerror="this.parentElement.innerHTML='<div style=\'background:#000;border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;\'><svg width=\'16\' height=\'16\' viewBox=\'0 0 24 24\' fill=\'white\'><path d=\'M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87a.5.5 0 0 0 .35-.85L6.35 2.85a.5.5 0 0 0-.85.36Z\'/></svg></div>'">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Cursor_logo.svg" alt="Cursor"
+                            onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/cursor.svg';">
                     </div>
                     <span>Cursor</span>
                 </div>
-                <!-- VS Code with Copilot -->
+                <!-- VS Code -->
                 <div class="tool">
                     <div class="tool-icon">
-                        <svg width="28" height="28" viewBox="0 0 100 100" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="100"
-                                height="100">
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M70.9119 99.3171C72.4869 99.9307 74.2828 99.8914 75.8725 99.1264L96.4608 89.2197C98.6242 88.1787 100 85.9892 100 83.5872V16.4133C100 14.0113 98.6242 11.8218 96.4608 10.7808L75.8725 0.874054C73.7862 -0.130204 71.3446 0.11576 69.5135 1.44695C69.252 1.63711 69.0028 1.84943 68.769 2.08341L29.3551 38.0415L12.1872 25.0096C10.589 23.7965 8.35363 23.8959 6.86933 25.2461L1.36303 30.2549C-0.452552 31.9064 -0.454633 34.7627 1.35853 36.417L16.2471 50.0001L1.35853 63.5832C-0.454633 65.2374 -0.452552 68.0938 1.36303 69.7452L6.86933 74.754C8.35363 76.1042 10.589 76.2036 12.1872 74.9905L29.3551 61.9586L68.769 97.9167C69.3925 98.5406 70.1246 99.0104 70.9119 99.3171ZM75.0152 27.2989L45.1091 50.0001L75.0152 72.7012V27.2989Z"
-                                    fill="white" />
-                            </mask>
-                            <g mask="url(#mask0)">
-                                <path
-                                    d="M96.4614 10.7962L75.8569 0.875542C73.4719 -0.272773 70.6217 0.211611 68.75 2.08333L1.29858 63.5765C-0.515693 65.2287 -0.513607 68.0852 1.30308 69.7345L6.81272 74.7446C8.29793 76.0952 10.5347 76.1944 12.1338 74.9802L93.3609 13.3699C96.086 11.3026 100 13.2462 100 16.6667V16.4275C100 14.0265 98.6246 11.8378 96.4614 10.7962Z"
-                                    fill="#0065A9" />
-                                <g filter="url(#filter0_d)">
-                                    <path
-                                        d="M96.4614 89.2038L75.8569 99.1245C73.4719 100.273 70.6217 99.7884 68.75 97.9167L1.29858 36.4235C-0.515693 34.7713 -0.513607 31.9148 1.30308 30.2655L6.81272 25.2554C8.29793 23.9048 10.5347 23.8056 12.1338 25.0198L93.3609 86.6301C96.086 88.6974 100 86.7538 100 83.3333V83.5765C100 85.9775 98.6246 88.1662 96.4614 89.2038Z"
-                                        fill="#007ACC" />
-                                </g>
-                                <g filter="url(#filter1_d)">
-                                    <path
-                                        d="M75.8578 99.1263C73.4721 100.274 70.6219 99.7885 68.75 97.9166C71.0564 100.223 75 98.5895 75 95.3278V4.67213C75 1.41039 71.0564 -0.223106 68.75 2.08329C70.6219 0.211402 73.4721 -0.273666 75.8578 0.873633L96.4587 10.7807C98.6234 11.8217 100 14.0112 100 16.4132V83.5871C100 85.9891 98.6234 88.1786 96.4587 89.2196L75.8578 99.1263Z"
-                                        fill="#1F9CF0" />
-                                </g>
-                            </g>
-                            <defs>
-                                <filter id="filter0_d" x="-8.39411" y="15.8291" width="116.727" height="92.2456"
-                                    filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                                    <feColorMatrix in="SourceAlpha" type="matrix"
-                                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
-                                    <feOffset />
-                                    <feGaussianBlur stdDeviation="4.16667" />
-                                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
-                                    <feBlend mode="overlay" in2="BackgroundImageFix" result="effect1_dropShadow" />
-                                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
-                                </filter>
-                                <filter id="filter1_d" x="60.4167" y="-8.07558" width="googl" height="googl"
-                                    filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                                    <feColorMatrix in="SourceAlpha" type="matrix"
-                                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
-                                    <feOffset />
-                                    <feGaussianBlur stdDeviation="4.16667" />
-                                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
-                                    <feBlend mode="overlay" in2="BackgroundImageFix" result="effect1_dropShadow" />
-                                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
-                                </filter>
-                            </defs>
-                        </svg>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg"
+                            alt="VS Code"
+                            onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/visualstudiocode.svg';">
                     </div>
                     <span>VS Code</span>
                 </div>
-                <!-- Google Gemini / Antigravity -->
+                <!-- Google Antigravity (Google logo as real mark) -->
                 <div class="tool">
                     <div class="tool-icon">
-                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="28" height="28" rx="6" fill="#000" />
-                            <path d="M14 4C14 4 14 14 14 14C14 14 4 14 4 14C4 8.477 8.477 4 14 4Z" fill="#4285F4" />
-                            <path d="M14 4C19.523 4 24 8.477 24 14C24 14 14 14 14 14C14 14 14 4 14 4Z" fill="#EA4335" />
-                            <path d="M14 14C14 14 14 24 14 24C8.477 24 4 19.523 4 14C4 14 14 14 14 14Z"
-                                fill="#FBBC04" />
-                            <path d="M14 14C14 14 24 14 24 14C24 19.523 19.523 24 14 24C14 24 14 14 14 14Z"
-                                fill="#34A853" />
-                        </svg>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google"
+                            onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/google.svg';">
                     </div>
                     <span>Google Antigravity</span>
                 </div>
-                <!-- Claude -->
+                <!-- Claude / Anthropic -->
                 <div class="tool">
                     <div class="tool-icon">
-                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="28" height="28" rx="6" fill="#CC785C" />
-                            <path d="M17.5 8L10 20H12.5L15.5 14.5L18.5 20H21L13.5 8H17.5Z" fill="white" />
-                            <path d="M10.5 8L7 20H9.5L10.75 16.5H14.25L12.75 13.5H11.75L13 10.5L10.5 8Z" fill="white" />
-                        </svg>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Anthropic_logo.svg"
+                            alt="Claude / Anthropic"
+                            onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/anthropic.svg';">
                     </div>
                     <span>Claude Code</span>
                 </div>
