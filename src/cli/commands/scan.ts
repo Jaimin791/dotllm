@@ -28,7 +28,7 @@ export async function scanCommand(_options: CLIOptions): Promise<void> {
         console.log('');
         console.log(`Would generate ${ruleCount} rules across ${analysis.languages.length + analysis.frameworks.length} detected technologies.`);
         console.log('');
-        console.log('Run `dotai init` to generate files.');
+        console.log('Run `dotllm init` to generate files.');
         console.log('');
 
     } catch (error) {

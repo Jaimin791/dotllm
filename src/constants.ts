@@ -141,7 +141,7 @@ export const OUTPUT_FILES = Object.freeze({
  * Package metadata.
  */
 export const PACKAGE_INFO = Object.freeze({
-    NAME: 'dotai',
-    NPM_URL: 'https://www.npmjs.com/package/dotai',
-    REPO_URL: 'https://github.com/Jaimin791/dotai',
+    NAME: 'dotllm',
+    NPM_URL: 'https://www.npmjs.com/package/dotllm',
+    REPO_URL: 'https://github.com/Jaimin791/dotllm',
 } as const);

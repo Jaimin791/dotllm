@@ -28,7 +28,7 @@ export function printBanner(): void {
   );
   console.log(
     chalk.cyan('  │') +
-    chalk.bold.white('  dotai ') +
+    chalk.bold.white('  dotllm ') +
     chalk.dim(`v${VERSION}`) +
     '                        ' +
     chalk.cyan('│')

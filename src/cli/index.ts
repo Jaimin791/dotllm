@@ -1,5 +1,5 @@
 /**
- * dotai CLI
+ * dotllm CLI
  *
  * Auto-generate AI-ready context files from any codebase.
  * Supports IDE-specific output for Cursor, Copilot, Claude Code, and more.
@@ -12,7 +12,7 @@ import type { CLIOptions } from '../types/config.js';
 const program = new Command();
 
 program
-  .name('dotai')
+  .name('dotllm')
   .description('Auto-generate stack-aware AI coding rules from any codebase')
   .version('1.0.0');
 

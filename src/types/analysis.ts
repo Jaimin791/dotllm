@@ -3,7 +3,7 @@
  * @module types/analysis
  *
  * This module defines all the type aliases and interfaces used
- * throughout the dotai package for representing
+ * throughout the dotllm package for representing
  * analysis results and detected project information.
  */
 

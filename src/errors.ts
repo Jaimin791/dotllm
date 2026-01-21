@@ -1,10 +1,10 @@
 /**
- * @fileoverview Custom error types for dotai
+ * @fileoverview Custom error types for dotllm
  * @module errors
  */
 
 /**
- * Base error class for all dotai errors.
+ * Base error class for all dotllm errors.
  * Provides consistent error structure across the package.
  */
 export class CodebaseContextError extends Error {
@@ -16,7 +16,7 @@ export class CodebaseContextError extends Error {
 
     constructor(message: string, code: string, context?: Record<string, unknown>) {
         super(message);
-        this.name = 'DotaiError';
+        this.name = 'AictxError';
         this.code = code;
         this.context = context;
 

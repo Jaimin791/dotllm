@@ -1,5 +1,5 @@
 /**
- * dotai
+ * dotllm
  * 
  * Auto-generate AI-ready context files from any codebase.
  */

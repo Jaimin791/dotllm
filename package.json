@@ -1,12 +1,12 @@
 {
-    "name": "dotai",
+    "name": "dotllm",
     "version": "1.0.0",
     "description": "Auto-generate AI-ready context files from any codebase. Produces AI_CODING_RULES.md and AI_PROJECT_CONTEXT.md for LLM consumption in Cursor, Copilot, and ChatGPT.",
     "type": "module",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "bin": {
-        "dotai": "./dist/cli/index.js",
+        "dotllm": "./dist/cli/index.js",
         "ctx": "./dist/cli/index.js"
     },
     "files": [
@@ -43,11 +43,11 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/Jaimin791/dotai.git"
+        "url": "https://github.com/Jaimin791/dotllm.git"
     },
-    "homepage": "https://github.com/Jaimin791/dotai#readme",
+    "homepage": "https://github.com/Jaimin791/dotllm#readme",
     "bugs": {
-        "url": "https://github.com/Jaimin791/dotai/issues"
+        "url": "https://github.com/Jaimin791/dotllm/issues"
     },
     "engines": {
         "node": ">=18.0.0"

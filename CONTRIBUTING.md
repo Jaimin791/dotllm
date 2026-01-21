@@ -1,4 +1,4 @@
-# Contributing to dotai
+# Contributing to dotllm
 
 Thank you for your interest in contributing! This guide will help you get started.
 
@@ -6,8 +6,8 @@ Thank you for your interest in contributing! This guide will help you get starte
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/Jaimin791/dotai.git
-   cd dotai
+   git clone https://github.com/Jaimin791/dotllm.git
+   cd dotllm
    ```
 
 2. **Install dependencies**
@@ -32,7 +32,7 @@ Thank you for your interest in contributing! This guide will help you get starte
    
    # Run in any project
    cd /path/to/test/project
-   dotai
+   dotllm
    ```
 
 ## Project Structure

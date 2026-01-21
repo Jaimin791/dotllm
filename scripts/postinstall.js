@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 /**
- * Post-install script for dotai
+ * Post-install script for dotllm
  * 
  * Displays a welcome message after package installation.
- * This runs automatically after `npm install dotai`.
+ * This runs automatically after `npm install dotllm`.
  */
 
 const RESET = '\x1b[0m';
@@ -15,14 +15,14 @@ const YELLOW = '\x1b[33m';
 const WHITE = '\x1b[37m';
 
 const pkg = {
-    name: 'dotai',
+    name: 'dotllm',
     version: '1.0.0',
 };
 
 console.log();
 console.log(`${DIM}╭──────────────────────────────────────────────────────────────────╮${RESET}`);
 console.log(`${DIM}│${RESET}                                                                  ${DIM}│${RESET}`);
-console.log(`${DIM}│${RESET}   ${CYAN}${BOLD}dotai${RESET} ${DIM}v${pkg.version}${RESET}                                       ${DIM}│${RESET}`);
+console.log(`${DIM}│${RESET}   ${CYAN}${BOLD}dotllm${RESET} ${DIM}v${pkg.version}${RESET}                                       ${DIM}│${RESET}`);
 console.log(`${DIM}│${RESET}   ${WHITE}Give your AI the context it deserves.${RESET}                         ${DIM}│${RESET}`);
 console.log(`${DIM}│${RESET}                                                                  ${DIM}│${RESET}`);
 console.log(`${DIM}├──────────────────────────────────────────────────────────────────┤${RESET}`);
@@ -31,7 +31,7 @@ console.log(`${DIM}│${RESET}   ${GREEN}✓${RESET} Successfully installed!    
 console.log(`${DIM}│${RESET}                                                                  ${DIM}│${RESET}`);
 console.log(`${DIM}│${RESET}   ${BOLD}Quick Start:${RESET}                                                    ${DIM}│${RESET}`);
 console.log(`${DIM}│${RESET}                                                                  ${DIM}│${RESET}`);
-console.log(`${DIM}│${RESET}   ${YELLOW}$${RESET} ${CYAN}npx dotai${RESET}                                         ${DIM}│${RESET}`);
+console.log(`${DIM}│${RESET}   ${YELLOW}$${RESET} ${CYAN}npx dotllm${RESET}                                         ${DIM}│${RESET}`);
 console.log(`${DIM}│${RESET}                                                                  ${DIM}│${RESET}`);
 console.log(`${DIM}│${RESET}   This will analyze your codebase and generate:                 ${DIM}│${RESET}`);
 console.log(`${DIM}│${RESET}                                                                  ${DIM}│${RESET}`);
@@ -42,13 +42,13 @@ console.log(`${DIM}├───────────────────�
 console.log(`${DIM}│${RESET}                                                                  ${DIM}│${RESET}`);
 console.log(`${DIM}│${RESET}   ${BOLD}Available Commands:${RESET}                                             ${DIM}│${RESET}`);
 console.log(`${DIM}│${RESET}                                                                  ${DIM}│${RESET}`);
-console.log(`${DIM}│${RESET}   ${CYAN}npx dotai${RESET}        ${DIM}Generate context files${RESET}            ${DIM}│${RESET}`);
-console.log(`${DIM}│${RESET}   ${CYAN}npx dotai scan${RESET}   ${DIM}Preview detected stack${RESET}            ${DIM}│${RESET}`);
-console.log(`${DIM}│${RESET}   ${CYAN}npx dotai update${RESET} ${DIM}Regenerate (overwrite)${RESET}            ${DIM}│${RESET}`);
+console.log(`${DIM}│${RESET}   ${CYAN}npx dotllm${RESET}        ${DIM}Generate context files${RESET}            ${DIM}│${RESET}`);
+console.log(`${DIM}│${RESET}   ${CYAN}npx dotllm scan${RESET}   ${DIM}Preview detected stack${RESET}            ${DIM}│${RESET}`);
+console.log(`${DIM}│${RESET}   ${CYAN}npx dotllm update${RESET} ${DIM}Regenerate (overwrite)${RESET}            ${DIM}│${RESET}`);
 console.log(`${DIM}│${RESET}                                                                  ${DIM}│${RESET}`);
 console.log(`${DIM}├──────────────────────────────────────────────────────────────────┤${RESET}`);
 console.log(`${DIM}│${RESET}                                                                  ${DIM}│${RESET}`);
-console.log(`${DIM}│${RESET}   ${DIM}📚 Docs:${RESET}  ${CYAN}https://github.com/Jaimin791/dotai${RESET}    ${DIM}│${RESET}`);
+console.log(`${DIM}│${RESET}   ${DIM}📚 Docs:${RESET}  ${CYAN}https://github.com/Jaimin791/dotllm${RESET}    ${DIM}│${RESET}`);
 console.log(`${DIM}│${RESET}   ${DIM}⭐ Star:${RESET}  ${DIM}If you find this useful, please star the repo!${RESET}      ${DIM}│${RESET}`);
 console.log(`${DIM}│${RESET}                                                                  ${DIM}│${RESET}`);
 console.log(`${DIM}╰──────────────────────────────────────────────────────────────────╯${RESET}`);
