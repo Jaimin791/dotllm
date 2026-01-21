@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dotllm - Marketing Card</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .card {
+      width: 1200px;
+      height: 630px;
+      background: linear-gradient(145deg, #1a1a1a 0%, #0d0d0d 100%);
+      border-radius: 24px;
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 
+        0 0 0 1px rgba(255,255,255,0.1),
+        0 25px 50px -12px rgba(0,0,0,0.5),
+        0 0 100px rgba(99, 102, 241, 0.1);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .title {
+      font-size: 56px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.02em;
+    }
+
+    .tagline {
+      font-size: 28px;
+      color: rgba(255,255,255,0.6);
+      margin-top: 16px;
+      font-weight: 400;
+    }
+
+    .terminal {
+      background: #0d0d0d;
+      border-radius: 16px;
+      padding: 24px 32px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 18px;
+      border: 1px solid rgba(255,255,255,0.1);
+      margin: 40px 0;
+    }
+
+    .terminal-header {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .terminal-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .terminal-dot.red { background: #ff5f56; }
+    .terminal-dot.yellow { background: #ffbd2e; }
+    .terminal-dot.green { background: #27c93f; }
+
+    .terminal-content {
+      color: #e4e4e7;
+      line-height: 1.8;
+    }
+
+    .prompt {
+      color: #6366f1;
+    }
+
+    .cmd {
+      color: #22c55e;
+    }
+
+    .output {
+      color: rgba(255,255,255,0.7);
+    }
+
+    .check {
+      color: #22c55e;
+    }
+
+    .features {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(255,255,255,0.8);
+      font-size: 18px;
+    }
+
+    .feature-icon {
+      width: 32px;
+      height: 32px;
+      background: rgba(99, 102, 241, 0.2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .tools {
+      display: flex;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .tool {
+      padding: 8px 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      color: rgba(255,255,255,0.7);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: rgba(255,255,255,0.4);
+      font-size: 16px;
+    }
+
+    .npm-badge {
+      background: #cb3837;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div>
+      <div class="header">
+        <div class="logo">&gt;_</div>
+        <h1 class="title">dotllm</h1>
+      </div>
+      <p class="tagline">Give your AI the context it deserves.</p>
+    </div>
+
+    <div class="terminal">
+      <div class="terminal-header">
+        <div class="terminal-dot red"></div>
+        <div class="terminal-dot yellow"></div>
+        <div class="terminal-dot green"></div>
+      </div>
+      <div class="terminal-content">
+        <span class="prompt">~/project $</span> <span class="cmd">npx dotllm</span><br><br>
+        <span class="check">✓</span> <span class="output">Detected: TypeScript, Next.js, Prisma, Tailwind</span><br>
+        <span class="check">✓</span> <span class="output">Generated: AI_CODING_RULES.md</span><br>
+        <span class="check">✓</span> <span class="output">Generated: AI_PROJECT_CONTEXT.md</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">🎯</div>
+          <span>Stack-aware rules</span>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">⚡</div>
+          <span>Zero config</span>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🔒</div>
+          <span>Runs locally</span>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">📝</div>
+          <span>50+ technologies</span>
+        </div>
+      </div>
+      
+      <div class="tools">
+        <div class="tool">Cursor</div>
+        <div class="tool">Copilot</div>
+        <div class="tool">Claude Code</div>
+        <div class="tool">Windsurf</div>
+        <div class="tool">Antigravity</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span>Open Source · MIT Licensed · github.com/Jaimin791/dotllm</span>
+      <div class="npm-badge">npm i dotllm</div>
+    </div>
+  </div>
+</body>
+</html>
