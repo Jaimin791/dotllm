@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Test coverage
+coverage/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Temporary files
+*.tmp
+*.temp
+
+# Generated output files (dotai outputs)
+AI_CODING_RULES.md
+AI_PROJECT_CONTEXT.md
+
+# Generated IDE rule files (dotai outputs)
+.cursorrules
+.windsurfrules
+CLAUDE.md
+.gemini/
+.github/copilot-instructions.md
