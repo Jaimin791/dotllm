@@ -1,252 +1,388 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>dotllm - Marketing Card</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dotllm - Marketing Card</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px;
-    }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 40px;
+            color: #1a1a1a;
+        }
 
-    .card {
-      width: 1200px;
-      height: 630px;
-      background: linear-gradient(145deg, #1a1a1a 0%, #0d0d0d 100%);
-      border-radius: 24px;
-      padding: 60px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 
-        0 0 0 1px rgba(255,255,255,0.1),
-        0 25px 50px -12px rgba(0,0,0,0.5),
-        0 0 100px rgba(99, 102, 241, 0.1);
-    }
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
 
-    .card::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -20%;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
-      pointer-events: none;
-    }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
 
-    .header {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
+        .intro-label {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
 
-    .logo {
-      width: 64px;
-      height: 64px;
-      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 28px;
-      font-weight: 700;
-      color: white;
-    }
+        .title {
+            font-size: 64px;
+            font-weight: 700;
+            color: #1a1a1a;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+        }
 
-    .title {
-      font-size: 56px;
-      font-weight: 700;
-      color: white;
-      letter-spacing: -0.02em;
-    }
+        .tagline {
+            font-size: 18px;
+            color: #555;
+            font-weight: 400;
+            line-height: 1.5;
+        }
 
-    .tagline {
-      font-size: 28px;
-      color: rgba(255,255,255,0.6);
-      margin-top: 16px;
-      font-weight: 400;
-    }
+        .terminal {
+            background: #1e1e1e;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 40px 0;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
 
-    .terminal {
-      background: #0d0d0d;
-      border-radius: 16px;
-      padding: 24px 32px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 18px;
-      border: 1px solid rgba(255,255,255,0.1);
-      margin: 40px 0;
-    }
+        .terminal-header {
+            background: #333;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-    .terminal-header {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 20px;
-    }
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
 
-    .terminal-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-    }
+        .terminal-dot.red {
+            background: #ff5f56;
+        }
 
-    .terminal-dot.red { background: #ff5f56; }
-    .terminal-dot.yellow { background: #ffbd2e; }
-    .terminal-dot.green { background: #27c93f; }
+        .terminal-dot.yellow {
+            background: #ffbd2e;
+        }
 
-    .terminal-content {
-      color: #e4e4e7;
-      line-height: 1.8;
-    }
+        .terminal-dot.green {
+            background: #27c93f;
+        }
 
-    .prompt {
-      color: #6366f1;
-    }
+        .terminal-title {
+            flex: 1;
+            text-align: center;
+            color: #888;
+            font-size: 13px;
+            font-weight: 500;
+        }
 
-    .cmd {
-      color: #22c55e;
-    }
+        .terminal-content {
+            padding: 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #e4e4e7;
+        }
 
-    .output {
-      color: rgba(255,255,255,0.7);
-    }
+        .prompt {
+            color: #22c55e;
+        }
 
-    .check {
-      color: #22c55e;
-    }
+        .command {
+            color: #ffffff;
+        }
 
-    .features {
-      display: flex;
-      gap: 40px;
-      flex-wrap: wrap;
-    }
+        .dim {
+            color: #666;
+        }
 
-    .feature {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: rgba(255,255,255,0.8);
-      font-size: 18px;
-    }
+        .check {
+            color: #22c55e;
+        }
 
-    .feature-icon {
-      width: 32px;
-      height: 32px;
-      background: rgba(99, 102, 241, 0.2);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-    }
+        .highlight {
+            color: #22c55e;
+        }
 
-    .tools {
-      display: flex;
-      gap: 16px;
-      margin-top: 20px;
-    }
+        .file {
+            color: #ffffff;
+            font-weight: 500;
+        }
 
-    .tool {
-      padding: 8px 16px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 8px;
-      color: rgba(255,255,255,0.7);
-      font-size: 14px;
-      font-weight: 500;
-    }
+        .count {
+            color: #666;
+        }
 
-    .footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: rgba(255,255,255,0.4);
-      font-size: 16px;
-    }
+        .cards-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
 
-    .npm-badge {
-      background: #cb3837;
-      color: white;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 14px;
-    }
-  </style>
+        .card {
+            background: #ffffff;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .card-title {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            color: #888;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            padding: 6px 14px;
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .works-with {
+            background: #f9f9f9;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            padding: 20px 32px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .works-with-title {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            color: #888;
+            text-transform: uppercase;
+        }
+
+        .tools {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .tool {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .tool-icon {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tool-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Cursor icon */
+        .cursor-icon {
+            background: #000;
+            border-radius: 6px;
+            padding: 4px;
+        }
+
+        /* VS Code icon */
+        .vscode-icon {
+            background: linear-gradient(135deg, #0078d4 0%, #0066b8 100%);
+            border-radius: 6px;
+            padding: 4px;
+        }
+
+        /* Antigravity icon */
+        .antigravity-icon {
+            background: #000;
+            border-radius: 6px;
+            padding: 4px;
+        }
+
+        /* Claude icon */
+        .claude-icon {
+            background: #cc785c;
+            border-radius: 6px;
+            padding: 4px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #888;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: #666;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
+
 <body>
-  <div class="card">
-    <div>
-      <div class="header">
-        <div class="logo">&gt;_</div>
-        <h1 class="title">dotllm</h1>
-      </div>
-      <p class="tagline">Give your AI the context it deserves.</p>
-    </div>
+    <div class="container">
+        <div class="header">
+            <div class="intro-label">Introducing</div>
+            <h1 class="title">dotllm</h1>
+            <p class="tagline">The .env for your AI assistant. Auto-generate coding rules & codebase context.</p>
+        </div>
 
-    <div class="terminal">
-      <div class="terminal-header">
-        <div class="terminal-dot red"></div>
-        <div class="terminal-dot yellow"></div>
-        <div class="terminal-dot green"></div>
-      </div>
-      <div class="terminal-content">
-        <span class="prompt">~/project $</span> <span class="cmd">npx dotllm</span><br><br>
-        <span class="check">✓</span> <span class="output">Detected: TypeScript, Next.js, Prisma, Tailwind</span><br>
-        <span class="check">✓</span> <span class="output">Generated: AI_CODING_RULES.md</span><br>
-        <span class="check">✓</span> <span class="output">Generated: AI_PROJECT_CONTEXT.md</span>
-      </div>
-    </div>
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-dot red"></div>
+                <div class="terminal-dot yellow"></div>
+                <div class="terminal-dot green"></div>
+                <div class="terminal-title">Terminal</div>
+            </div>
+            <div class="terminal-content">
+                <div><span class="prompt">~/project $</span> <span class="command">npx dotllm</span></div>
+                <br>
+                <div class="dim">Analyzing codebase...</div>
+                <br>
+                <div><span class="check">✓</span> <span class="highlight">Detected:</span> TypeScript, React, Next.js
+                </div>
+                <div><span class="check">✓</span> <span class="highlight">Testing:</span> Vitest, Playwright</div>
+                <div><span class="check">✓</span> <span class="highlight">Linting:</span> ESLint, Prettier</div>
+                <br>
+                <div><span class="check">✓</span> Created <span class="file">AI_CODING_RULES.md</span> <span
+                        class="count">(142 rules)</span></div>
+                <div><span class="check">✓</span> Created <span class="file">AI_PROJECT_CONTEXT.md</span></div>
+                <div><span class="check">✓</span> Created <span class="file">.cursorrules</span></div>
+            </div>
+        </div>
 
-    <div>
-      <div class="features">
-        <div class="feature">
-          <div class="feature-icon">🎯</div>
-          <span>Stack-aware rules</span>
+        <div class="cards-row">
+            <div class="card">
+                <div class="card-title">Languages</div>
+                <div class="tags">
+                    <span class="tag">TypeScript</span>
+                    <span class="tag">Python</span>
+                    <span class="tag">Go</span>
+                    <span class="tag">Rust</span>
+                    <span class="tag">Java</span>
+                    <span class="tag">C++</span>
+                    <span class="tag">Ruby</span>
+                    <span class="tag">PHP</span>
+                    <span class="tag">Swift</span>
+                    <span class="tag">Kotlin</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title">Frameworks</div>
+                <div class="tags">
+                    <span class="tag">React</span>
+                    <span class="tag">Next.js</span>
+                    <span class="tag">FastAPI</span>
+                    <span class="tag">Express</span>
+                    <span class="tag">Django</span>
+                    <span class="tag">Vue</span>
+                    <span class="tag">Angular</span>
+                    <span class="tag">Svelte</span>
+                    <span class="tag">Rails</span>
+                    <span class="tag">Spring</span>
+                </div>
+            </div>
         </div>
-        <div class="feature">
-          <div class="feature-icon">⚡</div>
-          <span>Zero config</span>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">🔒</div>
-          <span>Runs locally</span>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">📝</div>
-          <span>50+ technologies</span>
-        </div>
-      </div>
-      
-      <div class="tools">
-        <div class="tool">Cursor</div>
-        <div class="tool">Copilot</div>
-        <div class="tool">Claude Code</div>
-        <div class="tool">Windsurf</div>
-        <div class="tool">Antigravity</div>
-      </div>
-    </div>
 
-    <div class="footer">
-      <span>Open Source · MIT Licensed · github.com/Jaimin791/dotllm</span>
-      <div class="npm-badge">npm i dotllm</div>
+        <div class="works-with">
+            <div class="works-with-title">Works With</div>
+            <div class="tools">
+                <div class="tool">
+                    <div class="tool-icon cursor-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+                            <path d="M4 4L20 12L12 14L8 20L4 4Z" fill="white" />
+                        </svg>
+                    </div>
+                    <span>Cursor</span>
+                </div>
+                <div class="tool">
+                    <div class="tool-icon vscode-icon">
+                        <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg" width="18" height="18">
+                            <path
+                                d="M17.5 0L9.5 8L4 4L0 6V18L4 20L9.5 16L17.5 24L24 21V3L17.5 0ZM4 16.5V7.5L7.5 12L4 16.5ZM17.5 19L10.5 12L17.5 5V19Z" />
+                        </svg>
+                    </div>
+                    <span>VS Code</span>
+                </div>
+                <div class="tool">
+                    <div class="tool-icon antigravity-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="18" height="18">
+                            <path d="M12 2L2 19H22L12 2Z" fill="#4285F4" />
+                            <path d="M12 2L7 19H17L12 2Z" fill="#EA4335" />
+                        </svg>
+                    </div>
+                    <span>Google Antigravity</span>
+                </div>
+                <div class="tool">
+                    <div class="tool-icon claude-icon">
+                        <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg" width="18" height="18">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 5C13.66 5 15 6.34 15 8C15 9.66 13.66 11 12 11C10.34 11 9 9.66 9 8C9 6.34 10.34 5 12 5ZM12 19.2C9.5 19.2 7.29 17.92 6 15.98C6.03 13.99 10 12.9 12 12.9C13.99 12.9 17.97 13.99 18 15.98C16.71 17.92 14.5 19.2 12 19.2Z" />
+                        </svg>
+                    </div>
+                    <span>Claude Code</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Open Source · MIT Licensed · <a href="https://github.com/Jaimin791/dotllm">github.com/Jaimin791/dotllm</a>
+        </div>
     </div>
-  </div>
 </body>
+
 </html>
