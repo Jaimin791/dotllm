@@ -106,7 +106,7 @@ We love contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) to get star
 
 ## License
 
-MIT © [Your Name]
+MIT © dotllm
 
 ---
 
