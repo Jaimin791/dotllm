@@ -30,13 +30,17 @@ coverage/
 *.tmp
 *.temp
 
-# Generated output files (dotai outputs)
 AI_CODING_RULES.md
 AI_PROJECT_CONTEXT.md
 
-# Generated IDE rule files (dotai outputs)
 .cursorrules
 .windsurfrules
 CLAUDE.md
 .gemini/
 .github/copilot-instructions.md
+
+# Generated test files
+AGENTS.md
+GEMINI.md
+CLAUDE.md
+.cursor/

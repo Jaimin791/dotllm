@@ -1,7 +1,7 @@
 {
     "name": "dotllm",
-    "version": "1.0.0",
-    "description": "Auto-generate AI-ready context files from any codebase. Produces AI_CODING_RULES.md and AI_PROJECT_CONTEXT.md for LLM consumption in Cursor, Copilot, and ChatGPT.",
+    "version": "1.0.1",
+    "description": "Universal /init for AI coding assistants. Generates config files in the exact locations each tool expects (CLAUDE.md, GEMINI.md, AGENTS.md, .cursor/rules/, etc).",
     "type": "module",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",

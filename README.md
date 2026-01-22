@@ -1,58 +1,71 @@
 # dotllm
 
-> **The missing bridge between your codebase and your AI editor.**
+> **Universal `/init` for AI coding assistants.**
 
 [![npm version](https://badge.fury.io/js/dotllm.svg)](https://www.npmjs.com/package/dotllm)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**dotllm** analyzes your project and generates the *perfect* context files for your AI editor. It detects your stack (Next.js, Tailwind, Prisma, etc.) and creates strict coding rules that stop hallucinations.
+**dotllm** analyzes your project and generates context files **in the exact locations each AI tool expects**. It detects your stack (Next.js, Tailwind, Prisma, etc.) and creates strict coding rules that stop hallucinations.
 
-Works with **Cursor**, **Windsurf**, **GitHub Copilot**, **Claude Code**, and **ChatGPT**.
+## 🌐 Supported AI Tools
+
+| Tool | Config File | Convention |
+|------|-------------|------------|
+| **Cursor** | `.cursor/rules/rules.mdc` | New structured rules directory |
+| **Claude Code** | `CLAUDE.md` | At project root |
+| **Antigravity (Gemini)** | `GEMINI.md` | At project root |
+| **Codex (OpenAI)** | `AGENTS.md` | Open standard, cascading per directory |
+| **GitHub Copilot** | `.github/copilot-instructions.md` | In .github directory |
+| **Windsurf** | `.windsurfrules` | At project root |
 
 ---
 
 ## ⚡️ Quick Start
 
-No installation required. Run the command for your editor:
-
 ```bash
-# For Cursor (generates .cursorrules)
-npx dotllm cursor
-
-# For Windsurf (generates .windsurfrules)
-npx dotllm windsurf
-
-# For GitHub Copilot (generates .github/copilot-instructions.md)
-npx dotllm copilot
-
-# For Claude Code (generates CLAUDE.md)
-npx dotllm claude
-
-# For general purposes (generates markdown files)
+# Universal init - generates ALL config files for all supported AI tools
 npx dotllm
+
+# Or generate for a specific tool
+npx dotllm --ide cursor
+npx dotllm --ide claude-code
+npx dotllm --ide antigravity
+npx dotllm --ide codex
+npx dotllm --ide vscode-copilot
+npx dotllm --ide windsurf
+
+# Generate for multiple tools
+npx dotllm --ide cursor,claude-code,codex
 ```
 
 ---
 
 ## ⚠️ The Problem
 
-Every time you start a chat with an AI coding assistant, it knows **nothing** about your project constraints:
+Every AI coding tool has its own convention for configuration files:
+- Cursor wants `.cursor/rules/` 
+- Claude Code wants `CLAUDE.md`
+- Antigravity wants `GEMINI.md`
+- Codex uses the `AGENTS.md` standard
+- And so on...
 
-- ❌ It suggests `pages/` router when you use `app/` router.
-- ❌ It uses `yarn` when you use `pnpm`.
-- ❌ It writes React class components instead of functional ones.
-- ❌ It hallucinates libraries you don't even have installed.
-- ❌ It ignores your folder structure conventions.
-
-You end up writing the same prompt, over and over: *"We use Next.js 14, Tailwind, and prefer types over interfaces..."*
+Without proper config, AI assistants:
+- ❌ Suggest `pages/` router when you use `app/` router
+- ❌ Use `yarn` when you use `pnpm`
+- ❌ Write patterns that don't match your codebase
+- ❌ Hallucinate libraries you don't have installed
 
 ## ✅ The Solution
 
-**dotllm** scans your codebase, detects roughly **50+ technologies**, and generates a rule file that enforces your specific standards.
+**dotllm** is the **universal `/init`** command that:
 
-- **Stack-Aware**: Rules are only generated for what you actually use.
-- **Strict & Prescriptive**: Uses "DO NOT" rules to prevent common bad patterns.
-- **Zero Config**: It just works.
+1. **Scans your codebase** - Detects 50+ technologies
+2. **Generates rules** - Creates strict, stack-aware coding guidelines
+3. **Puts files in the right place** - Each file goes exactly where the tool looks for it
+
+No more guessing. No more manual setup. Just run `npx dotllm` and all your AI tools are configured.
+
+---
 
 ## 📦 What It Detects
 
@@ -70,35 +83,47 @@ You end up writing the same prompt, over and over: *"We use Next.js 14, Tailwind
 ### Preview Detection
 See what dotllm finds without writing any files:
 ```bash
-npx dotllm scan
+npx dotllm --dry-run
 ```
 
 ### Force Update
 Regenerate files and overwrite existing ones:
 ```bash
-npx dotllm update
+npx dotllm --force
+```
+
+### Verbose Mode
+See detailed detection info:
+```bash
+npx dotllm --verbose
 ```
 
 ### Programmatic API
 Use `dotllm` in your own scripts:
 ```typescript
-import { analyzeCodebase, generateRulesMarkdown } from 'dotllm';
+import { analyzeCodebase, generateAllIDEOutputs } from 'dotllm';
 
 const analysis = await analyzeCodebase('./my-project');
-const rules = generateRulesMarkdown(analysis);
-console.log(rules);
+const outputs = generateAllIDEOutputs(analysis, ['cursor', 'claude-code', 'codex']);
+
+for (const output of outputs) {
+  console.log(`${output.filePath}: ${output.content}`);
+}
 ```
 
 ## 🧠 Philosophy
 
-**1. LLM-First Design**
-These files are optimized for AI consumption, not human reading. They use clear, prescriptive language and explicit constraints to reduce temperature/hallucinations.
+**1. Put Files Where Tools Look**
+Each AI tool has specific conventions. We follow them exactly. No arbitrary file names, no custom locations.
 
-**2. Deterministic Context**
-Your AI context shouldn't depend on who is prompting. `dotllm` ensures every developer on your team gets the same high-quality assistance.
+**2. LLM-First Design**
+Files are optimized for AI consumption with clear, prescriptive language to reduce hallucinations.
 
-**3. Zero Dependencies on Cloud**
-Everything runs locally on your machine. No API calls, no data collection, no telemetry.
+**3. Universal Init**
+One command, all tools. Whether you use Cursor, Claude Code, Antigravity, or Codex - you're covered.
+
+**4. Zero Cloud Dependencies**
+Everything runs locally. No API calls, no data collection, no telemetry.
 
 ## Contributing
 
@@ -106,7 +131,7 @@ We love contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) to get star
 
 ## License
 
-MIT © dotllm
+MIT © [Jaimin Bhagat](https://github.com/Jaimin791)
 
 ---
 

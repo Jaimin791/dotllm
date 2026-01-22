@@ -130,11 +130,20 @@ export const MAX_DISPLAYED_DEPENDENCIES = 15;
 export const MAX_DISPLAYED_FOLDERS = 20;
 
 /**
- * Output file names.
+ * IDE-specific output file paths.
+ * IMPORTANT: These must match where each AI tool ACTUALLY looks for config!
+ * 
+ * We no longer generate arbitrary files like AI_CODING_RULES.md - instead,
+ * we generate files in the exact locations each tool expects.
  */
-export const OUTPUT_FILES = Object.freeze({
-    RULES: 'AI_CODING_RULES.md',
-    CONTEXT: 'AI_PROJECT_CONTEXT.md',
+export const IDE_OUTPUT_FILES = Object.freeze({
+    CURSOR: '.cursor/rules/rules.mdc',      // New convention
+    CURSOR_LEGACY: '.cursorrules',          // Legacy fallback
+    CLAUDE_CODE: 'CLAUDE.md',               // At project root
+    ANTIGRAVITY: 'GEMINI.md',               // At project root
+    CODEX: 'AGENTS.md',                     // At project root (open standard)
+    COPILOT: '.github/copilot-instructions.md',
+    WINDSURF: '.windsurfrules',
 } as const);
 
 /**

@@ -16,7 +16,7 @@ export class CodebaseContextError extends Error {
 
     constructor(message: string, code: string, context?: Record<string, unknown>) {
         super(message);
-        this.name = 'AictxError';
+        this.name = 'DotllmError';
         this.code = code;
         this.context = context;
 

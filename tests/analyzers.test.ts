@@ -364,11 +364,13 @@ describe('Constants', () => {
         expect(IGNORED_DIRECTORIES).toContain('.git');
     });
 
-    it('should export OUTPUT_FILES', async () => {
-        const { OUTPUT_FILES } = await import('../src/constants.js');
+    it('should export IDE_OUTPUT_FILES', async () => {
+        const { IDE_OUTPUT_FILES } = await import('../src/constants.js');
 
-        expect(OUTPUT_FILES.RULES).toBe('AI_CODING_RULES.md');
-        expect(OUTPUT_FILES.CONTEXT).toBe('AI_PROJECT_CONTEXT.md');
+        expect(IDE_OUTPUT_FILES.CURSOR).toBe('.cursor/rules/rules.mdc');
+        expect(IDE_OUTPUT_FILES.CLAUDE_CODE).toBe('CLAUDE.md');
+        expect(IDE_OUTPUT_FILES.ANTIGRAVITY).toBe('GEMINI.md');
+        expect(IDE_OUTPUT_FILES.CODEX).toBe('AGENTS.md');
     });
 
     it('should export PACKAGE_INFO', async () => {

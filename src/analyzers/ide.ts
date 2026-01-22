@@ -22,6 +22,7 @@ export type IDE =
     | 'vscode-copilot'
     | 'claude-code'
     | 'antigravity'
+    | 'codex'
     | 'windsurf'
     | 'zed'
     | 'unknown';
@@ -66,12 +67,20 @@ export interface IDEDetectionResult {
 
 /**
  * IDE configuration files and directories.
+ * 
+ * IMPORTANT: These paths must match what each AI tool ACTUALLY looks for!
+ * - Cursor: .cursor/rules/*.md or .cursor/rules/*.mdc (new), .cursorrules (legacy)
+ * - Claude Code: CLAUDE.md at root, .claude/ directory for skills/hooks
+ * - Antigravity: GEMINI.md at root, .gemini/ for settings
+ * - Codex: AGENTS.md (cascading per directory)
+ * - Copilot: .github/copilot-instructions.md
  */
-const IDE_INDICATORS: Record<IDE, { patterns: string[]; displayName: string; rulesFile?: string }> = {
+const IDE_INDICATORS: Record<IDE, { patterns: string[]; displayName: string; rulesFile?: string; legacyRulesFile?: string }> = {
     cursor: {
-        patterns: ['.cursorrules', '.cursor/', '.cursorignore'],
+        patterns: ['.cursor/', '.cursor/rules/', '.cursorrules', '.cursorignore'],
         displayName: 'Cursor',
-        rulesFile: '.cursorrules',
+        rulesFile: '.cursor/rules/rules.md',      // New convention
+        legacyRulesFile: '.cursorrules',           // Legacy fallback
     },
     'vscode-copilot': {
         patterns: ['.github/copilot-instructions.md', '.vscode/'],
@@ -86,12 +95,17 @@ const IDE_INDICATORS: Record<IDE, { patterns: string[]; displayName: string; rul
     'claude-code': {
         patterns: ['CLAUDE.md', '.claude/', 'claude.md'],
         displayName: 'Claude Code (Anthropic)',
-        rulesFile: 'CLAUDE.md',
+        rulesFile: 'CLAUDE.md',  // At project root
     },
     antigravity: {
-        patterns: ['.gemini/', '.gemini/settings.json', '.agent/'],
-        displayName: 'Antigravity (Google)',
-        rulesFile: '.gemini/CODING_RULES.md',
+        patterns: ['GEMINI.md', '.gemini/', '.gemini/settings.json', '.agent/'],
+        displayName: 'Antigravity (Google/Gemini)',
+        rulesFile: 'GEMINI.md',  // At project root (not .gemini/CODING_RULES.md!)
+    },
+    codex: {
+        patterns: ['AGENTS.md', 'agents.md'],
+        displayName: 'Codex (OpenAI)',
+        rulesFile: 'AGENTS.md',  // At project root, cascading per directory
     },
     windsurf: {
         patterns: ['.windsurfrules', '.windsurf/'],
@@ -117,6 +131,7 @@ const IDE_PRIORITY: IDE[] = [
     'cursor',
     'claude-code',
     'antigravity',
+    'codex',
     'windsurf',
     'vscode-copilot',
     'vscode',

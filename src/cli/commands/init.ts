@@ -2,7 +2,13 @@
  * Init command - main generation command
  * 
  * Generates AI context files for the current project.
- * Supports IDE-specific output for Cursor, Copilot, Claude Code, etc.
+ * Files are generated in the EXACT locations each AI tool expects:
+ * - Cursor: .cursor/rules/rules.mdc
+ * - Claude Code: CLAUDE.md
+ * - Antigravity: GEMINI.md
+ * - Codex: AGENTS.md
+ * - Copilot: .github/copilot-instructions.md
+ * - Windsurf: .windsurfrules
  */
 
 import { writeFileSync, existsSync, mkdirSync } from 'fs';
@@ -13,25 +19,29 @@ import chalk from 'chalk';
 import type { CLIOptions } from '../../types/index.js';
 import { analyzeCodebase } from '../../analyzers/index.js';
 import { detectIDE, type IDE } from '../../analyzers/ide.js';
-import {
-    generateRulesMarkdown,
-    getRuleCount,
-    generateContextMarkdown,
-} from '../../generators/index.js';
+import { getRuleCount } from '../../generators/index.js';
 import {
     generateAllIDEOutputs,
-    generateIDEOutput,
     type IDEOutput,
 } from '../../generators/ide-outputs.js';
 import {
     printBanner,
     printDetectedStack,
-    printSummary,
     printDryRunSummary,
     printEmptyProjectWarning,
     printUpdateNotice,
     log,
 } from '../output.js';
+
+// All supported IDEs that we can generate for
+const ALL_SUPPORTED_IDES: IDE[] = [
+    'cursor',
+    'claude-code',
+    'antigravity',
+    'codex',
+    'vscode-copilot',
+    'windsurf',
+];
 
 /**
  * Main init command handler.
@@ -90,64 +100,70 @@ export async function initCommand(options: CLIOptions): Promise<void> {
             console.log('');
         }
 
-        // Generate markdown content
-        const rulesContent = generateRulesMarkdown(analysis);
-        const contextContent = generateContextMarkdown(analysis);
         const ruleCount = getRuleCount(analysis);
 
-        // Generate IDE-specific outputs
-        const ideOutputs: IDEOutput[] = [];
+        // Determine which IDEs to generate for
+        let targetIDEs: IDE[] = [];
 
-        // Auto-detect and generate for detected IDEs
-        if (ideDetection.detected.length > 0) {
-            ideOutputs.push(...generateAllIDEOutputs(analysis, ideDetection.detected));
+        // Priority 1: If --ide flag is passed, use those
+        if (options.ide) {
+            targetIDEs = options.ide.split(',').map((s) => s.trim() as IDE);
+        }
+        // Priority 2: If IDEs were detected in the project, use those
+        else if (ideDetection.detected.length > 0) {
+            targetIDEs = ideDetection.detected;
+        }
+        // Priority 3: Generate for ALL supported IDEs (universal init!)
+        else {
+            targetIDEs = ALL_SUPPORTED_IDES;
+            console.log(chalk.bold('🌐 Universal Mode:'));
+            console.log(
+                chalk.dim('   '),
+                'No specific IDE detected. Generating config for',
+                chalk.cyan('all supported AI tools')
+            );
+            console.log('');
         }
 
-        // If --ide flag is passed, generate for specific IDE(s)
-        if (options.ide) {
-            const requestedIDEs = options.ide.split(',').map((s) => s.trim() as IDE);
-            for (const ide of requestedIDEs) {
-                // Avoid duplicates
-                if (!ideOutputs.some((o) => o.ide === ide)) {
-                    const output = generateIDEOutput(analysis, ide);
-                    if (output) {
-                        ideOutputs.push(output);
-                    }
-                }
-            }
+        // Generate IDE-specific outputs
+        const ideOutputs: IDEOutput[] = generateAllIDEOutputs(analysis, targetIDEs);
+
+        // Only generate for IDEs that have output
+        if (ideOutputs.length === 0) {
+            log.warning('No IDE-specific outputs could be generated.');
+            return;
         }
 
         // Dry run check
         if (options.dryRun) {
             printDryRunSummary(analysis, ruleCount);
 
-            // Show IDE files that would be generated
-            if (ideOutputs.length > 0) {
-                console.log(chalk.bold('🛠️  IDE-specific files:'));
-                for (const output of ideOutputs) {
-                    console.log(
-                        chalk.dim('   •'),
-                        chalk.cyan(output.filePath),
-                        chalk.dim(`(${output.description})`)
-                    );
-                }
-                console.log('');
+            console.log(chalk.bold('📁 Files that would be generated:'));
+            console.log('');
+            console.log(chalk.dim('   These files are placed where each AI tool actually looks:'));
+            console.log('');
+            for (const output of ideOutputs) {
+                console.log(
+                    chalk.dim('   '),
+                    chalk.green('✓'),
+                    chalk.cyan(output.filePath),
+                    chalk.dim(`← ${output.description}`)
+                );
             }
+            console.log('');
             return;
         }
 
-        // File paths
-        const rulesPath = join(outputDir, 'AI_CODING_RULES.md');
-        const contextPath = join(outputDir, 'AI_PROJECT_CONTEXT.md');
+        // Check for existing files
+        const existingFiles = ideOutputs
+            .map((o) => o.filePath)
+            .filter((fp) => existsSync(join(outputDir, fp)));
 
-        // Check for existing files (base files)
-        const rulesExists = existsSync(rulesPath);
-        const contextExists = existsSync(contextPath);
-
-        if ((rulesExists || contextExists) && !options.force) {
+        if (existingFiles.length > 0 && !options.force) {
             log.warning('Existing files found. Use --force to overwrite.');
-            if (rulesExists) console.log(chalk.dim('   •'), 'AI_CODING_RULES.md');
-            if (contextExists) console.log(chalk.dim('   •'), 'AI_PROJECT_CONTEXT.md');
+            for (const file of existingFiles) {
+                console.log(chalk.dim('   •'), file);
+            }
             console.log('');
             return;
         }
@@ -155,18 +171,13 @@ export async function initCommand(options: CLIOptions): Promise<void> {
         // Write files
         const writeSpinner = ora('Writing files...').start();
 
-        // Write base files
-        writeFileSync(rulesPath, rulesContent, 'utf-8');
-        writeFileSync(contextPath, contextContent, 'utf-8');
-
-        // Write IDE-specific files
-        const writtenIDEFiles: string[] = [];
+        const writtenFiles: string[] = [];
         for (const output of ideOutputs) {
             const filePath = join(outputDir, output.filePath);
 
-            // Create directory if needed (e.g., .gemini/, .github/)
+            // Create directory if needed (e.g., .cursor/rules/, .github/)
             const dir = dirname(filePath);
-            if (!existsSync(dir)) {
+            if (dir !== outputDir && !existsSync(dir)) {
                 mkdirSync(dir, { recursive: true });
             }
 
@@ -176,24 +187,33 @@ export async function initCommand(options: CLIOptions): Promise<void> {
             }
 
             writeFileSync(filePath, output.content, 'utf-8');
-            writtenIDEFiles.push(output.filePath);
+            writtenFiles.push(output.filePath);
         }
 
         writeSpinner.succeed('Files written');
         console.log('');
 
-        // Print summary
-        printSummary(rulesPath, contextPath, ruleCount);
-
-        // Print IDE-specific files written
-        if (writtenIDEFiles.length > 0) {
-            console.log(chalk.bold('🛠️  IDE-Specific Files:'));
-            console.log('');
-            for (const file of writtenIDEFiles) {
-                console.log(chalk.dim('   '), chalk.green('✓'), chalk.cyan(file));
-            }
-            console.log('');
+        // Print success summary
+        console.log(chalk.bold.green('✅ Success!'));
+        console.log('');
+        console.log(chalk.bold('📁 Generated Files:'));
+        console.log('');
+        console.log(chalk.dim('   These files are placed where each AI tool looks for them:'));
+        console.log('');
+        for (const file of writtenFiles) {
+            const output = ideOutputs.find((o) => o.filePath === file);
+            console.log(
+                chalk.dim('   '),
+                chalk.green('✓'),
+                chalk.cyan(file),
+                chalk.dim(`← ${output?.description || ''}`)
+            );
         }
+        console.log('');
+
+        // Print rule count
+        console.log(chalk.bold(`📊 Generated ${chalk.cyan(ruleCount)} rules based on your stack`));
+        console.log('');
 
         // Print usage tips
         printUpdateNotice();

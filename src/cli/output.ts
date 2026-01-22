@@ -16,7 +16,7 @@ export const log = {
 /**
  * Package version (kept in sync with package.json)
  */
-const VERSION = '1.0.0';
+const VERSION = '1.0.1';
 
 /**
  * Print banner with version
@@ -92,24 +92,7 @@ export function printDetectedStack(analysis: AnalysisResult): void {
   console.log('');
 }
 
-/**
- * Print generation summary
- */
-export function printSummary(rulesPath: string, _contextPath: string, ruleCount: number): void {
-  console.log(chalk.bold.green('✅ Files generated:\n'));
-  console.log(
-    chalk.dim('  ├─'),
-    chalk.white('AI_CODING_RULES.md'),
-    chalk.dim(`(${ruleCount} rules)`)
-  );
-  console.log(chalk.dim('  └─'), chalk.white('AI_PROJECT_CONTEXT.md'));
-  console.log('');
-  console.log(
-    chalk.dim('  Files written to:'),
-    chalk.cyan(rulesPath.replace('/AI_CODING_RULES.md', ''))
-  );
-  console.log('');
-}
+
 
 /**
  * Print dry run summary
@@ -117,9 +100,7 @@ export function printSummary(rulesPath: string, _contextPath: string, ruleCount:
 export function printDryRunSummary(analysis: AnalysisResult, ruleCount: number): void {
   console.log(chalk.bold.yellow('🔍 Dry run - no files written\n'));
   printDetectedStack(analysis);
-  console.log(chalk.dim('Would generate:'));
-  console.log(chalk.dim('  ├─'), 'AI_CODING_RULES.md', chalk.dim(`(${ruleCount} rules)`));
-  console.log(chalk.dim('  └─'), 'AI_PROJECT_CONTEXT.md');
+  console.log(chalk.dim(`Would generate ${ruleCount} rules based on your stack.`));
   console.log('');
 }
 
@@ -136,37 +117,37 @@ export function printEmptyProjectWarning(): void {
  * Print update notice
  */
 export function printUpdateNotice(): void {
-  console.log(chalk.dim('┌────────────────────────────────────────────────────────────────┐'));
+  console.log(chalk.dim('┌─────────────────────────────────────────────────────────────────┐'));
   console.log(
     chalk.dim('│'),
     chalk.bold(' Usage Tips:'),
-    chalk.dim('                                                   │')
+    chalk.dim('                                                    │')
   );
   console.log(
     chalk.dim('│'),
-    '                                                               ',
+    '                                                                ',
     chalk.dim('│')
   );
   console.log(
     chalk.dim('│'),
-    ' • Add these files to your repo for team-wide AI consistency  ',
+    ' • Commit these files to your repo for team-wide AI consistency ',
     chalk.dim('│')
   );
   console.log(
     chalk.dim('│'),
-    ' • Paste contents into Cursor/Copilot system prompts          ',
+    ' • Each file is placed where the AI tool looks for it           ',
     chalk.dim('│')
   );
   console.log(
     chalk.dim('│'),
-    ' • Re-run after major project changes                         ',
+    ' • Re-run after major project changes: npx dotllm --force       ',
     chalk.dim('│')
   );
   console.log(
     chalk.dim('│'),
-    '                                                               ',
+    '                                                                ',
     chalk.dim('│')
   );
-  console.log(chalk.dim('└────────────────────────────────────────────────────────────────┘'));
+  console.log(chalk.dim('└─────────────────────────────────────────────────────────────────┘'));
   console.log('');
 }

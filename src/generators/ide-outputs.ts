@@ -3,11 +3,14 @@
  * @module generators/ide-outputs
  * 
  * Generates IDE-specific configuration files for:
- * - Cursor (.cursorrules)
+ * - Cursor (.cursor/rules/rules.md - new convention, .cursorrules - legacy)
  * - VS Code + Copilot (.github/copilot-instructions.md)
- * - Claude Code (CLAUDE.md)
- * - Antigravity (.gemini/CODING_RULES.md)
+ * - Claude Code (CLAUDE.md at project root)
+ * - Antigravity (GEMINI.md at project root)
+ * - Codex (AGENTS.md - open standard, cascading per directory)
  * - Windsurf (.windsurfrules)
+ * 
+ * IMPORTANT: File paths must match what each tool ACTUALLY looks for!
  */
 
 import type { AnalysisResult } from '../types/index.js';
@@ -40,14 +43,21 @@ export interface IDEOutput {
 // ============================================================================
 
 /**
- * Generates .cursorrules file for Cursor IDE.
+ * Generates rules for Cursor IDE.
  * 
- * Cursor uses a single `.cursorrules` file at the project root.
- * Format is plain text with markdown-like sections.
+ * Cursor now uses the `.cursor/rules/` directory (new convention).
+ * Files can be .md or .mdc (with frontmatter for globs).
+ * Legacy: .cursorrules at project root still works.
  */
 export function generateCursorRules(analysis: AnalysisResult): IDEOutput {
     const rules = getApplicableRules(analysis);
     const lines: string[] = [];
+
+    // Frontmatter for .mdc format (optional, but useful)
+    lines.push('---');
+    lines.push(`description: Project rules for ${analysis.projectName}`);
+    lines.push('---');
+    lines.push('');
 
     // Header
     lines.push('# Cursor Rules');
@@ -96,9 +106,9 @@ export function generateCursorRules(analysis: AnalysisResult): IDEOutput {
 
     return {
         ide: 'cursor',
-        filePath: '.cursorrules',
+        filePath: '.cursor/rules/rules.mdc',  // New convention with .mdc extension
         content: lines.join('\n'),
-        description: 'Cursor IDE rules file',
+        description: 'Cursor IDE rules file (new .cursor/rules/ convention)',
     };
 }
 
@@ -274,19 +284,19 @@ export function generateClaudeRules(analysis: AnalysisResult): IDEOutput {
 // ============================================================================
 
 /**
- * Generates .gemini/CODING_RULES.md for Antigravity.
+ * Generates GEMINI.md for Antigravity (Google Gemini).
  * 
- * Antigravity uses the `.gemini/` directory for project configuration.
+ * Antigravity reads project instructions from `GEMINI.md` at the project root.
+ * The `.gemini/` directory is used for settings, not rules.
  */
 export function generateAntigravityRules(analysis: AnalysisResult): IDEOutput {
     const rules = getApplicableRules(analysis);
     const lines: string[] = [];
 
-    // Header with Antigravity-style formatting
-    lines.push('# Coding Rules for Antigravity');
+    // Header
+    lines.push('# GEMINI.md');
     lines.push('');
-    lines.push('> These rules guide Antigravity (Gemini) when working with this codebase.');
-    lines.push('> Follow them strictly unless explicitly asked otherwise.');
+    lines.push('This file provides project-specific guidance for Antigravity (Google Gemini).');
     lines.push('');
 
     // Project context
@@ -306,22 +316,23 @@ export function generateAntigravityRules(analysis: AnalysisResult): IDEOutput {
     lines.push('');
 
     // Rules sections
+    lines.push('## Coding Standards');
+    lines.push('');
     for (const rule of rules) {
-        lines.push(`## ${rule.title}`);
+        lines.push(`### ${rule.title}`);
         lines.push('');
-        lines.push(rule.description || '');
-        lines.push('');
+        if (rule.description) {
+            lines.push(rule.description);
+            lines.push('');
+        }
 
-        lines.push('### Requirements');
-        lines.push('');
         for (const item of rule.rules) {
             lines.push(`- ${item.text}`);
         }
         lines.push('');
 
         if (rule.antiPatterns && rule.antiPatterns.length > 0) {
-            lines.push('### Anti-Patterns (DO NOT)');
-            lines.push('');
+            lines.push('**Avoid:**');
             for (const anti of rule.antiPatterns) {
                 lines.push(`- ❌ ${anti.text}`);
             }
@@ -329,7 +340,7 @@ export function generateAntigravityRules(analysis: AnalysisResult): IDEOutput {
         }
     }
 
-    // Folder responsibilities (Antigravity finds this useful)
+    // Folder responsibilities
     if (analysis.folderResponsibilities.length > 0) {
         lines.push('## Folder Responsibilities');
         lines.push('');
@@ -356,9 +367,9 @@ export function generateAntigravityRules(analysis: AnalysisResult): IDEOutput {
 
     return {
         ide: 'antigravity',
-        filePath: '.gemini/CODING_RULES.md',
+        filePath: 'GEMINI.md',  // At project root, not .gemini/CODING_RULES.md!
         content: lines.join('\n'),
-        description: 'Antigravity (Gemini) coding rules',
+        description: 'Antigravity (Gemini) project instructions',
     };
 }
 
@@ -406,6 +417,126 @@ export function generateWindsurfRules(analysis: AnalysisResult): IDEOutput {
 }
 
 // ============================================================================
+// Codex (OpenAI) Generator - AGENTS.md Standard
+// ============================================================================
+
+/**
+ * Generates AGENTS.md for Codex (OpenAI) and compatible tools.
+ * 
+ * AGENTS.md is an emerging open standard for AI coding agent instructions.
+ * It's designed to be tool-agnostic and works with multiple AI assistants.
+ * Files can be nested in subdirectories for cascading rules in monorepos.
+ */
+export function generateCodexRules(analysis: AnalysisResult): IDEOutput {
+    const rules = getApplicableRules(analysis);
+    const lines: string[] = [];
+
+    // Header
+    lines.push('# AGENTS.md');
+    lines.push('');
+    lines.push('> This file provides project-specific guidance for AI coding agents.');
+    lines.push('> Compatible with OpenAI Codex, and other tools following the AGENTS.md standard.');
+    lines.push('');
+
+    // Project overview
+    lines.push('## Project Overview');
+    lines.push('');
+    lines.push(`**${analysis.projectName}**`);
+    lines.push('');
+    lines.push(`- **Languages:** ${analysis.languages.join(', ')}`);
+    if (analysis.frameworks.length > 0) {
+        lines.push(`- **Frameworks:** ${analysis.frameworks.join(', ')}`);
+    }
+    if (analysis.packageManagers.length > 0) {
+        lines.push(`- **Package Manager:** ${analysis.packageManagers[0]}`);
+    }
+    if (analysis.testFrameworks.length > 0) {
+        lines.push(`- **Testing:** ${analysis.testFrameworks.join(', ')}`);
+    }
+    lines.push('');
+
+    // Development commands
+    lines.push('## Development');
+    lines.push('');
+    lines.push('```bash');
+    if (analysis.packageManagers.includes('npm') ||
+        analysis.packageManagers.includes('pnpm') ||
+        analysis.packageManagers.includes('yarn')) {
+        const pm = analysis.packageManagers[0];
+        lines.push(`# Install dependencies`);
+        lines.push(`${pm} install`);
+        lines.push('');
+        lines.push(`# Development`);
+        lines.push(`${pm} run dev`);
+        if (analysis.hasTests) {
+            lines.push('');
+            lines.push(`# Testing`);
+            lines.push(`${pm} run test`);
+        }
+    } else if (analysis.packageManagers.includes('cargo')) {
+        lines.push('cargo build   # Build');
+        lines.push('cargo run     # Run');
+        lines.push('cargo test    # Test');
+    } else if (analysis.packageManagers.includes('go')) {
+        lines.push('go build      # Build');
+        lines.push('go run .      # Run');
+        lines.push('go test ./... # Test');
+    } else if (analysis.languages.includes('python')) {
+        lines.push('pip install -r requirements.txt  # Install');
+        lines.push('python main.py                   # Run');
+        lines.push('pytest                           # Test');
+    }
+    lines.push('```');
+    lines.push('');
+
+    // Code style
+    lines.push('## Code Style');
+    lines.push('');
+    for (const rule of rules) {
+        lines.push(`### ${rule.title}`);
+        lines.push('');
+        for (const item of rule.rules) {
+            lines.push(`- ${item.text}`);
+        }
+        lines.push('');
+
+        if (rule.antiPatterns && rule.antiPatterns.length > 0) {
+            lines.push('**Avoid:**');
+            for (const anti of rule.antiPatterns) {
+                lines.push(`- ❌ ${anti.text}`);
+            }
+            lines.push('');
+        }
+    }
+
+    // Project structure (useful for agents to understand the codebase)
+    if (analysis.folderResponsibilities.length > 0) {
+        lines.push('## Project Structure');
+        lines.push('');
+        for (const fr of analysis.folderResponsibilities.slice(0, 15)) {
+            lines.push(`- \`${fr.path}/\` - ${fr.responsibility}`);
+        }
+        lines.push('');
+    }
+
+    // PR/Commit guidelines
+    lines.push('## Pull Requests');
+    lines.push('');
+    lines.push('- Write clear, descriptive commit messages');
+    lines.push('- Keep PRs focused and reasonably sized');
+    lines.push('- Ensure all tests pass before submitting');
+    lines.push('- Update documentation when changing behavior');
+    lines.push('');
+
+    return {
+        ide: 'codex',
+        filePath: 'AGENTS.md',
+        content: lines.join('\n'),
+        description: 'AGENTS.md - Open standard for AI coding agents',
+    };
+}
+
+// ============================================================================
 // Main Generator
 // ============================================================================
 
@@ -426,6 +557,8 @@ export function generateIDEOutput(analysis: AnalysisResult, ide: IDE): IDEOutput
             return generateClaudeRules(analysis);
         case 'antigravity':
             return generateAntigravityRules(analysis);
+        case 'codex':
+            return generateCodexRules(analysis);
         case 'windsurf':
             return generateWindsurfRules(analysis);
         default:
@@ -457,11 +590,13 @@ export function generateAllIDEOutputs(analysis: AnalysisResult, ides: IDE[]): ID
  * Gets a summary of what will be generated for an IDE.
  */
 export function getIDEOutputSummary(ide: IDE): { fileName: string; description: string } | null {
+    // IMPORTANT: These paths must match where each tool ACTUALLY looks for config!
     const mapping: Record<string, { fileName: string; description: string }> = {
-        cursor: { fileName: '.cursorrules', description: 'Cursor IDE rules' },
+        cursor: { fileName: '.cursor/rules/rules.mdc', description: 'Cursor IDE rules (new convention)' },
         'vscode-copilot': { fileName: '.github/copilot-instructions.md', description: 'GitHub Copilot instructions' },
-        'claude-code': { fileName: 'CLAUDE.md', description: 'Claude Code project context' },
-        antigravity: { fileName: '.gemini/CODING_RULES.md', description: 'Antigravity (Gemini) rules' },
+        'claude-code': { fileName: 'CLAUDE.md', description: 'Claude Code project instructions' },
+        antigravity: { fileName: 'GEMINI.md', description: 'Antigravity (Gemini) project instructions' },
+        codex: { fileName: 'AGENTS.md', description: 'AGENTS.md - Open standard for AI agents' },
         windsurf: { fileName: '.windsurfrules', description: 'Windsurf (Codeium) rules' },
     };
 
