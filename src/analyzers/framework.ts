@@ -5,6 +5,7 @@
 import { join } from 'path';
 import type {
   Framework,
+  AIFramework,
   BuildTool,
   TestFramework,
   LintTool,
@@ -127,6 +128,75 @@ const DATABASE_DEPS: Record<string, Database> = {
   pymongo: 'mongodb',
 };
 
+/** AI Framework dependencies */
+const AI_FRAMEWORK_DEPS: Record<string, AIFramework> = {
+  // LangChain ecosystem (Python)
+  langchain: 'langchain',
+  'langchain-core': 'langchain-core',
+  'langchain-community': 'langchain-community',
+  'langchain-openai': 'langchain-openai',
+  'langchain-anthropic': 'langchain-anthropic',
+  'langchain-google-genai': 'langchain-google',
+  'langchain-google-vertexai': 'langchain-google',
+  langgraph: 'langgraph',
+  'langgraph-sdk': 'langgraph',
+  langsmith: 'langsmith',
+  langserve: 'langserve',
+
+  // LangChain ecosystem (JavaScript/TypeScript)
+  '@langchain/core': 'langchain-core',
+  '@langchain/community': 'langchain-community',
+  '@langchain/openai': 'langchain-openai',
+  '@langchain/anthropic': 'langchain-anthropic',
+  '@langchain/google-genai': 'langchain-google',
+  '@langchain/langgraph': 'langgraph',
+
+  // Other agent frameworks
+  crewai: 'crewai',
+  'crewai-tools': 'crewai',
+  autogen: 'autogen',
+  'pyautogen': 'autogen',
+  'llama-index': 'llamaindex',
+  'llama-index-core': 'llamaindex',
+  llamaindex: 'llamaindex',
+  'semantic-kernel': 'semantic-kernel',
+  'haystack-ai': 'haystack',
+  'farm-haystack': 'haystack',
+  dspy: 'dspy',
+  'dspy-ai': 'dspy',
+
+  // LLM Providers
+  openai: 'openai',
+  anthropic: 'anthropic',
+  '@anthropic-ai/sdk': 'anthropic',
+  '@google/generative-ai': 'google-ai',
+  'google-generativeai': 'google-ai',
+  cohere: 'cohere',
+  'cohere-ai': 'cohere',
+  transformers: 'huggingface',
+  huggingface_hub: 'huggingface',
+  '@huggingface/inference': 'huggingface',
+  ollama: 'ollama',
+  'ollama-ai-provider': 'ollama',
+
+  // Vector stores
+  '@pinecone-database/pinecone': 'pinecone',
+  'pinecone-client': 'pinecone',
+  chromadb: 'chroma',
+  'chromadb-client': 'chroma',
+  weaviate: 'weaviate',
+  'weaviate-client': 'weaviate',
+  'qdrant-client': 'qdrant',
+  pymilvus: 'milvus',
+  pgvector: 'pgvector',
+
+  // Orchestration tools
+  prefect: 'prefect',
+  dagster: 'dagster',
+  apache_airflow: 'airflow',
+  airflow: 'airflow',
+};
+
 /**
  * Detect frameworks from dependencies
  */
@@ -155,6 +225,54 @@ export function detectFrameworks(deps: Dependency[]): Framework[] {
   }
 
   return frameworks;
+}
+
+/**
+ * Detect AI frameworks from dependencies
+ */
+export function detectAIFrameworks(deps: Dependency[]): AIFramework[] {
+  const aiFrameworks: AIFramework[] = [];
+  const depNames = new Set(deps.map((d) => d.name.toLowerCase()));
+
+  for (const [depName, framework] of Object.entries(AI_FRAMEWORK_DEPS)) {
+    if (depNames.has(depName.toLowerCase())) {
+      if (!aiFrameworks.includes(framework)) {
+        aiFrameworks.push(framework);
+      }
+    }
+  }
+
+  // Group related frameworks for better categorization
+  // If langchain-core is detected, also mark as langchain ecosystem
+  if (
+    aiFrameworks.some((f) =>
+      ['langchain-core', 'langchain-community', 'langchain-openai', 'langchain-anthropic', 'langchain-google'].includes(f)
+    ) &&
+    !aiFrameworks.includes('langchain')
+  ) {
+    aiFrameworks.unshift('langchain');
+  }
+
+  return aiFrameworks;
+}
+
+/**
+ * Check if project is an AI agent project
+ */
+export function isAIAgentProject(aiFrameworks: AIFramework[]): boolean {
+  const agentFrameworks: AIFramework[] = [
+    'langchain',
+    'langchain-core',
+    'langgraph',
+    'crewai',
+    'autogen',
+    'llamaindex',
+    'semantic-kernel',
+    'haystack',
+    'dspy',
+  ];
+
+  return aiFrameworks.some((f) => agentFrameworks.includes(f));
 }
 
 /**

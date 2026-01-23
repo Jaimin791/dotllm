@@ -87,14 +87,16 @@ function formatRuleSection(section: RuleSection): string {
 
   // Standard rules
   for (const rule of section.rules) {
-    markdown += `- ${rule.text}\n`;
+    const sourceSuffix = rule.source ? ` *(Source: ${rule.source})*` : '';
+    markdown += `- ${rule.text}${sourceSuffix}\n`;
   }
 
   // Anti-patterns (DO NOT rules)
   if (section.antiPatterns && section.antiPatterns.length > 0) {
     markdown += `\n### DO NOT\n\n`;
     for (const rule of section.antiPatterns) {
-      markdown += `- ❌ ${rule.text}\n`;
+      const sourceSuffix = rule.source ? ` *(Source: ${rule.source})*` : '';
+      markdown += `- ❌ ${rule.text}${sourceSuffix}\n`;
     }
   }
 

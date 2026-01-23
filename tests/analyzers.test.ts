@@ -116,6 +116,165 @@ describe('Framework Detection', () => {
 });
 
 // ============================================================================
+// AI Framework Detection Tests
+// ============================================================================
+
+describe('AI Framework Detection', () => {
+    it('should export detectAIFrameworks function', async () => {
+        const { detectAIFrameworks } = await import('../src/analyzers/framework.js');
+        expect(typeof detectAIFrameworks).toBe('function');
+    });
+
+    it('should export isAIAgentProject function', async () => {
+        const { isAIAgentProject } = await import('../src/analyzers/framework.js');
+        expect(typeof isAIAgentProject).toBe('function');
+    });
+
+    it('should detect LangChain from dependencies', async () => {
+        const { detectAIFrameworks } = await import('../src/analyzers/framework.js');
+
+        const deps = [
+            { name: 'langchain', version: '0.1.0', isDev: false },
+            { name: 'langchain-openai', version: '0.1.0', isDev: false },
+        ];
+
+        const aiFrameworks = detectAIFrameworks(deps);
+        expect(aiFrameworks).toContain('langchain');
+        expect(aiFrameworks).toContain('langchain-openai');
+    });
+
+    it('should detect LangGraph from dependencies', async () => {
+        const { detectAIFrameworks } = await import('../src/analyzers/framework.js');
+
+        const deps = [
+            { name: 'langgraph', version: '0.1.0', isDev: false },
+        ];
+
+        const aiFrameworks = detectAIFrameworks(deps);
+        expect(aiFrameworks).toContain('langgraph');
+    });
+
+    it('should detect LangSmith from dependencies', async () => {
+        const { detectAIFrameworks } = await import('../src/analyzers/framework.js');
+
+        const deps = [
+            { name: 'langsmith', version: '0.1.0', isDev: false },
+        ];
+
+        const aiFrameworks = detectAIFrameworks(deps);
+        expect(aiFrameworks).toContain('langsmith');
+    });
+
+    it('should detect CrewAI from dependencies', async () => {
+        const { detectAIFrameworks } = await import('../src/analyzers/framework.js');
+
+        const deps = [
+            { name: 'crewai', version: '0.1.0', isDev: false },
+        ];
+
+        const aiFrameworks = detectAIFrameworks(deps);
+        expect(aiFrameworks).toContain('crewai');
+    });
+
+    it('should detect AutoGen from dependencies', async () => {
+        const { detectAIFrameworks } = await import('../src/analyzers/framework.js');
+
+        const deps = [
+            { name: 'pyautogen', version: '0.2.0', isDev: false },
+        ];
+
+        const aiFrameworks = detectAIFrameworks(deps);
+        expect(aiFrameworks).toContain('autogen');
+    });
+
+    it('should detect LlamaIndex from dependencies', async () => {
+        const { detectAIFrameworks } = await import('../src/analyzers/framework.js');
+
+        const deps = [
+            { name: 'llama-index', version: '0.10.0', isDev: false },
+        ];
+
+        const aiFrameworks = detectAIFrameworks(deps);
+        expect(aiFrameworks).toContain('llamaindex');
+    });
+
+    it('should detect vector stores from dependencies', async () => {
+        const { detectAIFrameworks } = await import('../src/analyzers/framework.js');
+
+        const deps = [
+            { name: '@pinecone-database/pinecone', version: '2.0.0', isDev: false },
+            { name: 'chromadb', version: '1.0.0', isDev: false },
+        ];
+
+        const aiFrameworks = detectAIFrameworks(deps);
+        expect(aiFrameworks).toContain('pinecone');
+        expect(aiFrameworks).toContain('chroma');
+    });
+
+    it('should detect OpenAI from dependencies', async () => {
+        const { detectAIFrameworks } = await import('../src/analyzers/framework.js');
+
+        const deps = [
+            { name: 'openai', version: '4.0.0', isDev: false },
+        ];
+
+        const aiFrameworks = detectAIFrameworks(deps);
+        expect(aiFrameworks).toContain('openai');
+    });
+
+    it('should detect Anthropic from dependencies', async () => {
+        const { detectAIFrameworks } = await import('../src/analyzers/framework.js');
+
+        const deps = [
+            { name: '@anthropic-ai/sdk', version: '0.20.0', isDev: false },
+        ];
+
+        const aiFrameworks = detectAIFrameworks(deps);
+        expect(aiFrameworks).toContain('anthropic');
+    });
+
+    it('should add langchain if only langchain-core is detected', async () => {
+        const { detectAIFrameworks } = await import('../src/analyzers/framework.js');
+
+        const deps = [
+            { name: 'langchain-core', version: '0.1.0', isDev: false },
+        ];
+
+        const aiFrameworks = detectAIFrameworks(deps);
+        expect(aiFrameworks).toContain('langchain');
+        expect(aiFrameworks).toContain('langchain-core');
+    });
+
+    it('should identify AI agent projects correctly', async () => {
+        const { isAIAgentProject } = await import('../src/analyzers/framework.js');
+
+        expect(isAIAgentProject(['langchain', 'openai'])).toBe(true);
+        expect(isAIAgentProject(['langgraph'])).toBe(true);
+        expect(isAIAgentProject(['crewai'])).toBe(true);
+        expect(isAIAgentProject(['autogen'])).toBe(true);
+        expect(isAIAgentProject(['openai'])).toBe(false); // Just LLM provider, not agent framework
+        expect(isAIAgentProject(['pinecone'])).toBe(false); // Just vector store
+        expect(isAIAgentProject([])).toBe(false);
+    });
+
+    it('should detect @langchain/ scoped packages for TypeScript projects', async () => {
+        const { detectAIFrameworks } = await import('../src/analyzers/framework.js');
+
+        const deps = [
+            { name: '@langchain/core', version: '0.1.0', isDev: false },
+            { name: '@langchain/openai', version: '0.1.0', isDev: false },
+            { name: '@langchain/langgraph', version: '0.1.0', isDev: false },
+        ];
+
+        const aiFrameworks = detectAIFrameworks(deps);
+        expect(aiFrameworks).toContain('langchain'); // Should be added since langchain-core is detected
+        expect(aiFrameworks).toContain('langchain-core');
+        expect(aiFrameworks).toContain('langchain-openai');
+        expect(aiFrameworks).toContain('langgraph');
+    });
+});
+
+// ============================================================================
 // Rule Generation Tests
 // ============================================================================
 
@@ -207,6 +366,90 @@ describe('Rule Generation', () => {
         const rules = getApplicableRules(mockAnalysis);
 
         expect(rules.some(r => r.id === 'security')).toBe(true);
+    });
+
+    it('should generate AI agent rules for LangChain projects', async () => {
+        const { getApplicableRules } = await import('../src/rules/index.js');
+
+        const mockAnalysis = createMockAnalysis({
+            languages: ['python'],
+            aiFrameworks: ['langchain', 'langchain-openai'],
+        });
+
+        const rules = getApplicableRules(mockAnalysis);
+
+        expect(rules.some(r => r.id === 'ai-agents')).toBe(true);
+        expect(rules.some(r => r.id === 'langchain')).toBe(true);
+        expect(rules.some(r => r.id === 'prompt-engineering')).toBe(true);
+    });
+
+    it('should generate LangGraph rules for LangGraph projects', async () => {
+        const { getApplicableRules } = await import('../src/rules/index.js');
+
+        const mockAnalysis = createMockAnalysis({
+            languages: ['python'],
+            aiFrameworks: ['langchain', 'langgraph'],
+        });
+
+        const rules = getApplicableRules(mockAnalysis);
+
+        expect(rules.some(r => r.id === 'langgraph')).toBe(true);
+    });
+
+    it('should generate LangSmith rules for LangSmith projects', async () => {
+        const { getApplicableRules } = await import('../src/rules/index.js');
+
+        const mockAnalysis = createMockAnalysis({
+            languages: ['python'],
+            aiFrameworks: ['langchain', 'langsmith'],
+        });
+
+        const rules = getApplicableRules(mockAnalysis);
+
+        expect(rules.some(r => r.id === 'langsmith')).toBe(true);
+    });
+
+    it('should generate CrewAI rules for CrewAI projects', async () => {
+        const { getApplicableRules } = await import('../src/rules/index.js');
+
+        const mockAnalysis = createMockAnalysis({
+            languages: ['python'],
+            aiFrameworks: ['crewai'],
+        });
+
+        const rules = getApplicableRules(mockAnalysis);
+
+        expect(rules.some(r => r.id === 'crewai')).toBe(true);
+        expect(rules.some(r => r.id === 'ai-agents')).toBe(true);
+    });
+
+    it('should generate RAG rules when vector stores are detected', async () => {
+        const { getApplicableRules } = await import('../src/rules/index.js');
+
+        const mockAnalysis = createMockAnalysis({
+            languages: ['python'],
+            aiFrameworks: ['langchain', 'pinecone', 'chroma'],
+        });
+
+        const rules = getApplicableRules(mockAnalysis);
+
+        expect(rules.some(r => r.id === 'rag')).toBe(true);
+    });
+
+    it('should NOT generate AI rules for non-AI projects', async () => {
+        const { getApplicableRules } = await import('../src/rules/index.js');
+
+        const mockAnalysis = createMockAnalysis({
+            languages: ['typescript'],
+            frameworks: ['react'],
+            aiFrameworks: [],
+        });
+
+        const rules = getApplicableRules(mockAnalysis);
+
+        expect(rules.some(r => r.id === 'ai-agents')).toBe(false);
+        expect(rules.some(r => r.id === 'langchain')).toBe(false);
+        expect(rules.some(r => r.id === 'langgraph')).toBe(false);
     });
 });
 
@@ -432,6 +675,7 @@ function createMockAnalysis(overrides: Partial<{
     lintTools: string[];
     infraTools: string[];
     databases: string[];
+    aiFrameworks: string[];
     dependencies: Array<{ name: string; version: string; isDev: boolean }>;
     folderStructure: Array<{ name: string; path: string; type: 'file' | 'directory' }>;
     folderResponsibilities: Array<{ path: string; responsibility: string }>;
@@ -456,6 +700,7 @@ function createMockAnalysis(overrides: Partial<{
         lintTools: overrides.lintTools ?? [],
         infraTools: overrides.infraTools ?? [],
         databases: overrides.databases ?? [],
+        aiFrameworks: overrides.aiFrameworks ?? [],
         dependencies: overrides.dependencies ?? [],
         folderStructure: overrides.folderStructure ?? [],
         folderResponsibilities: overrides.folderResponsibilities ?? [],

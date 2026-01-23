@@ -6,6 +6,7 @@
 export interface Rule {
   text: string;
   isProhibition: boolean; // "DO NOT" rules
+  source?: string; // e.g., "Official React Docs", "LangChain Best Practices"
 }
 
 /** A section of related rules */

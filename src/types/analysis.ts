@@ -111,7 +111,69 @@ export type Framework =
   | 'rocket'
   // Ruby
   | 'rails'
-  | 'sinatra';
+  | 'sinatra'
+  // AI Agent Frameworks
+  | 'langchain'
+  | 'langgraph'
+  | 'crewai'
+  | 'autogen'
+  | 'llamaindex'
+  | 'semantic-kernel'
+  | 'haystack'
+  | 'dspy'
+  | 'openai-agents'
+  | 'anthropic-agents';
+
+// ============================================================================
+// AI Framework Types
+// ============================================================================
+
+/**
+ * AI/ML frameworks and tools that can be detected.
+ *
+ * Detection is based on dependencies and configuration files.
+ *
+ * @example
+ * ```typescript
+ * const aiFrameworks: AIFramework[] = ['langchain', 'langgraph'];
+ * ```
+ */
+export type AIFramework =
+  // LangChain Ecosystem
+  | 'langchain'
+  | 'langchain-core'
+  | 'langchain-community'
+  | 'langchain-openai'
+  | 'langchain-anthropic'
+  | 'langchain-google'
+  | 'langgraph'
+  | 'langsmith'
+  | 'langserve'
+  // Other Agent Frameworks
+  | 'crewai'
+  | 'autogen'
+  | 'llamaindex'
+  | 'semantic-kernel'
+  | 'haystack'
+  | 'dspy'
+  // LLM Providers
+  | 'openai'
+  | 'anthropic'
+  | 'google-ai'
+  | 'cohere'
+  | 'huggingface'
+  | 'ollama'
+  // Vector Stores
+  | 'pinecone'
+  | 'chroma'
+  | 'weaviate'
+  | 'qdrant'
+  | 'milvus'
+  | 'pgvector'
+  // Orchestration
+  | 'prefect'
+  | 'dagster'
+  | 'airflow';
 
 // ============================================================================
 // Tooling Types
@@ -348,6 +410,9 @@ export interface AnalysisResult {
 
   /** Database technologies detected */
   databases: Database[];
+
+  /** AI frameworks and tools detected */
+  aiFrameworks: AIFramework[];
 
   // ─────────────────────────────────────────────────────────────────────────
   // Dependencies

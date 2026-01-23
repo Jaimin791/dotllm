@@ -16,7 +16,7 @@ export const log = {
 /**
  * Package version (kept in sync with package.json)
  */
-const VERSION = '1.0.1';
+const VERSION = '1.0.2';
 
 /**
  * Print banner with version
@@ -76,6 +76,9 @@ export function printDetectedStack(analysis: AnalysisResult): void {
   }
   if (analysis.infraTools.length > 0) {
     items.push(['Infrastructure', analysis.infraTools]);
+  }
+  if (analysis.aiFrameworks && analysis.aiFrameworks.length > 0) {
+    items.push(['AI Frameworks', analysis.aiFrameworks]);
   }
 
   for (let i = 0; i < items.length; i++) {

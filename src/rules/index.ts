@@ -22,6 +22,15 @@ import {
   expressRules,
   nestjsRules,
   honoRules,
+  aiAgentRules,
+  langchainRules,
+  langgraphRules,
+  langsmithRules,
+  crewaiRules,
+  ragRules,
+  promptEngineeringRules,
+  autogenRules,
+  llamaindexRules,
 } from './frameworks/index.js';
 import {
   testingRules,
@@ -118,6 +127,64 @@ export function getApplicableRules(analysis: AnalysisResult): RuleSection[] {
 
   // Always include security rules
   sections.push(securityRules);
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // AI Agent Framework Rules
+  // ─────────────────────────────────────────────────────────────────────────
+
+  // Check if this is an AI agent project
+  const hasAIFrameworks = analysis.aiFrameworks && analysis.aiFrameworks.length > 0;
+
+  if (hasAIFrameworks) {
+    // Always include general AI agent rules for any AI project
+    sections.push(aiAgentRules);
+
+    // LangChain ecosystem
+    if (
+      analysis.aiFrameworks.some((f) =>
+        ['langchain', 'langchain-core', 'langchain-community', 'langchain-openai', 'langchain-anthropic', 'langchain-google'].includes(f)
+      )
+    ) {
+      sections.push(langchainRules);
+    }
+
+    // LangGraph
+    if (analysis.aiFrameworks.includes('langgraph')) {
+      sections.push(langgraphRules);
+    }
+
+    // LangSmith
+    if (analysis.aiFrameworks.includes('langsmith')) {
+      sections.push(langsmithRules);
+    }
+
+    // CrewAI
+    if (analysis.aiFrameworks.includes('crewai')) {
+      sections.push(crewaiRules);
+    }
+
+    // AutoGen
+    if (analysis.aiFrameworks.includes('autogen')) {
+      sections.push(autogenRules);
+    }
+
+    // LlamaIndex
+    if (analysis.aiFrameworks.includes('llamaindex')) {
+      sections.push(llamaindexRules);
+    }
+
+    // Include RAG rules if vector stores are detected
+    if (
+      analysis.aiFrameworks.some((f) =>
+        ['pinecone', 'chroma', 'weaviate', 'qdrant', 'milvus', 'pgvector'].includes(f)
+      )
+    ) {
+      sections.push(ragRules);
+    }
+
+    // Always include prompt engineering rules for AI projects
+    sections.push(promptEngineeringRules);
+  }
 
   return sections;
 }

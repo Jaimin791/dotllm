@@ -1,6 +1,6 @@
 {
     "name": "dotllm",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Universal /init for AI coding assistants. Generates config files in the exact locations each tool expects (CLAUDE.md, GEMINI.md, AGENTS.md, .cursor/rules/, etc).",
     "type": "module",
     "main": "./dist/index.js",

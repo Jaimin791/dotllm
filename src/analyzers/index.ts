@@ -12,6 +12,7 @@ import {
 } from './package-manager.js';
 import {
   detectFrameworks,
+  detectAIFrameworks,
   detectBuildTools,
   detectTestFrameworks,
   detectLintTools,
@@ -58,6 +59,9 @@ export async function analyzeCodebase(rootPath: string): Promise<AnalysisResult>
   // Detect databases
   const databases = detectDatabases(dependencies, rootPath);
 
+  // Detect AI frameworks
+  const aiFrameworks = detectAIFrameworks(dependencies);
+
   // Detect infrastructure tools
   const infraTools = detectInfraTools(rootPath);
 
@@ -91,6 +95,7 @@ export async function analyzeCodebase(rootPath: string): Promise<AnalysisResult>
     lintTools,
     infraTools,
     databases,
+    aiFrameworks,
     dependencies,
     folderStructure,
     folderResponsibilities,
@@ -108,7 +113,7 @@ export async function analyzeCodebase(rootPath: string): Promise<AnalysisResult>
 
 export { detectLanguages } from './language.js';
 export { detectPackageManagers, isMonorepo, getWorkspaces } from './package-manager.js';
-export { detectFrameworks, detectBuildTools, detectTestFrameworks } from './framework.js';
+export { detectFrameworks, detectAIFrameworks, isAIAgentProject, detectBuildTools, detectTestFrameworks } from './framework.js';
 export {
   analyzeFileTree,
   inferFolderResponsibilities,
