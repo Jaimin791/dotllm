@@ -131,7 +131,7 @@ We love contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) to get star
 
 ## License
 
-MIT © [Jaimin Bhagat](https://github.com/Jaimin791)
+MIT © DotLLM
 
 ---
 
