@@ -13,6 +13,7 @@ import {
   djangoRules,
   goRules,
   rustRules,
+  phpRules,
 } from './languages/index.js';
 import {
   reactRules,
@@ -22,6 +23,7 @@ import {
   expressRules,
   nestjsRules,
   honoRules,
+  laravelRules,
   aiAgentRules,
   langchainRules,
   langgraphRules,
@@ -66,6 +68,10 @@ export function getApplicableRules(analysis: AnalysisResult): RuleSection[] {
     sections.push(rustRules);
   }
 
+  if (analysis.languages.includes('php')) {
+    sections.push(phpRules);
+  }
+
   // Frontend framework rules
   if (analysis.frameworks.includes('nextjs')) {
     sections.push(nextjsRules);
@@ -100,6 +106,10 @@ export function getApplicableRules(analysis: AnalysisResult): RuleSection[] {
 
   if (analysis.frameworks.includes('hono')) {
     sections.push(honoRules);
+  }
+
+  if (analysis.frameworks.includes('laravel')) {
+    sections.push(laravelRules);
   }
 
   // Always include naming conventions
@@ -142,7 +152,14 @@ export function getApplicableRules(analysis: AnalysisResult): RuleSection[] {
     // LangChain ecosystem
     if (
       analysis.aiFrameworks.some((f) =>
-        ['langchain', 'langchain-core', 'langchain-community', 'langchain-openai', 'langchain-anthropic', 'langchain-google'].includes(f)
+        [
+          'langchain',
+          'langchain-core',
+          'langchain-community',
+          'langchain-openai',
+          'langchain-anthropic',
+          'langchain-google',
+        ].includes(f)
       )
     ) {
       sections.push(langchainRules);

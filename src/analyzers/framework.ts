@@ -67,6 +67,11 @@ const FRAMEWORK_DEPS: Record<string, Framework> = {
   // Ruby frameworks
   rails: 'rails',
   sinatra: 'sinatra',
+
+  // PhP frameworks
+  laravel: 'laravel',
+  'laravel/framework': 'laravel',
+  'laravel/lumen': 'laravel', // For Lumen support
 };
 
 /** Build tool dependencies */
@@ -155,7 +160,7 @@ const AI_FRAMEWORK_DEPS: Record<string, AIFramework> = {
   crewai: 'crewai',
   'crewai-tools': 'crewai',
   autogen: 'autogen',
-  'pyautogen': 'autogen',
+  pyautogen: 'autogen',
   'llama-index': 'llamaindex',
   'llama-index-core': 'llamaindex',
   llamaindex: 'llamaindex',
@@ -246,7 +251,13 @@ export function detectAIFrameworks(deps: Dependency[]): AIFramework[] {
   // If langchain-core is detected, also mark as langchain ecosystem
   if (
     aiFrameworks.some((f) =>
-      ['langchain-core', 'langchain-community', 'langchain-openai', 'langchain-anthropic', 'langchain-google'].includes(f)
+      [
+        'langchain-core',
+        'langchain-community',
+        'langchain-openai',
+        'langchain-anthropic',
+        'langchain-google',
+      ].includes(f)
     ) &&
     !aiFrameworks.includes('langchain')
   ) {

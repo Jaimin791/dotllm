@@ -113,7 +113,13 @@ export async function analyzeCodebase(rootPath: string): Promise<AnalysisResult>
 
 export { detectLanguages } from './language.js';
 export { detectPackageManagers, isMonorepo, getWorkspaces } from './package-manager.js';
-export { detectFrameworks, detectAIFrameworks, isAIAgentProject, detectBuildTools, detectTestFrameworks } from './framework.js';
+export {
+  detectFrameworks,
+  detectAIFrameworks,
+  isAIAgentProject,
+  detectBuildTools,
+  detectTestFrameworks,
+} from './framework.js';
 export {
   analyzeFileTree,
   inferFolderResponsibilities,

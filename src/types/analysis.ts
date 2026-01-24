@@ -112,6 +112,8 @@ export type Framework =
   // Ruby
   | 'rails'
   | 'sinatra'
+  // PHP
+  | 'laravel'
   // AI Agent Frameworks
   | 'langchain'
   | 'langgraph'
@@ -123,7 +125,6 @@ export type Framework =
   | 'dspy'
   | 'openai-agents'
   | 'anthropic-agents';
-
 // ============================================================================
 // AI Framework Types
 // ============================================================================
