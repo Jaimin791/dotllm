@@ -308,6 +308,46 @@ export function parsePythonDependencies(rootPath: string): Dependency[] {
 }
 
 /**
+ * Parses dependencies from a composer.json file.
+ *
+ * @param rootPath - Absolute path to the project root
+ * @returns Array of dependencies (both runtime and dev)
+ */
+export function parseComposerDependencies(rootPath: string): Dependency[] {
+  interface ComposerJson {
+    require?: Record<string, string>;
+    'require-dev'?: Record<string, string>;
+  }
+
+  const composerJson = readJsonFile<ComposerJson>(join(rootPath, 'composer.json'));
+  if (!composerJson) {
+    return [];
+  }
+
+  const deps: Dependency[] = [];
+
+  // Runtime dependencies
+  if (composerJson.require) {
+    for (const [name, version] of Object.entries(composerJson.require)) {
+      // Skip php version constraint
+      if (name === 'php') {
+        continue;
+      }
+      deps.push({ name, version, isDev: false });
+    }
+  }
+
+  // Development dependencies
+  if (composerJson['require-dev']) {
+    for (const [name, version] of Object.entries(composerJson['require-dev'])) {
+      deps.push({ name, version, isDev: true });
+    }
+  }
+
+  return deps;
+}
+
+/**
  * Gets all dependencies from all detected package managers.
  *
  * @param rootPath - Absolute path to the project root
@@ -327,6 +367,9 @@ export function getAllDependencies(rootPath: string): Dependency[] {
 
   // Python
   deps.push(...parsePythonDependencies(rootPath));
+
+  // PHP/Composer
+  deps.push(...parseComposerDependencies(rootPath));
 
   // TODO: Add parsers for Go (go.mod), Rust (Cargo.toml), etc.
 

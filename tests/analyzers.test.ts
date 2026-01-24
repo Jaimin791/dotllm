@@ -50,6 +50,11 @@ describe('Package Manager Detection', () => {
     expect(typeof parseNpmDependencies).toBe('function');
   });
 
+  it('should export parseComposerDependencies function', async () => {
+    const { parseComposerDependencies } = await import('../src/analyzers/package-manager.js');
+    expect(typeof parseComposerDependencies).toBe('function');
+  });
+
   it('should export getAllDependencies function', async () => {
     const { getAllDependencies } = await import('../src/analyzers/package-manager.js');
     expect(typeof getAllDependencies).toBe('function');
