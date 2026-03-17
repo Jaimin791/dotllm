@@ -213,3 +213,14 @@ export function getProjectDescription(rootPath: string): string | null {
 
   return null;
 }
+
+/**
+ * Get custom rules from .dotllm/rules.md
+ */
+export function getCustomRules(rootPath: string): string | undefined {
+  const customRulesPath = join(rootPath, '.dotllm', 'rules.md');
+  if (pathExists(customRulesPath)) {
+    return readFile(customRulesPath) || undefined;
+  }
+  return undefined;
+}

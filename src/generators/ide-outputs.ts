@@ -99,6 +99,14 @@ export function generateCursorRules(analysis: AnalysisResult): IDEOutput {
         }
     }
 
+    // Custom rules
+    if (analysis.customRules) {
+        lines.push('## Custom Project Rules');
+        lines.push('');
+        lines.push(analysis.customRules);
+        lines.push('');
+    }
+
     // Footer
     lines.push('---');
     lines.push('');
@@ -166,6 +174,15 @@ export function generateCopilotInstructions(analysis: AnalysisResult): IDEOutput
         for (const anti of allAntiPatterns.slice(0, 20)) { // Limit to top 20
             lines.push(`- ❌ ${anti.text}`);
         }
+        lines.push('');
+    }
+
+    // Custom rules
+    if (analysis.customRules) {
+        lines.push('---');
+        lines.push('## Custom Rules');
+        lines.push('');
+        lines.push(analysis.customRules);
         lines.push('');
     }
 
@@ -271,6 +288,15 @@ export function generateClaudeRules(analysis: AnalysisResult): IDEOutput {
         lines.push('');
     }
 
+    // Custom rules
+    if (analysis.customRules) {
+        lines.push('---');
+        lines.push('## Custom Rules');
+        lines.push('');
+        lines.push(analysis.customRules);
+        lines.push('');
+    }
+
     return {
         ide: 'claude-code',
         filePath: 'CLAUDE.md',
@@ -352,6 +378,14 @@ export function generateAntigravityRules(analysis: AnalysisResult): IDEOutput {
         lines.push('');
     }
 
+    // Custom rules
+    if (analysis.customRules) {
+        lines.push('## Custom Rules');
+        lines.push('');
+        lines.push(analysis.customRules);
+        lines.push('');
+    }
+
     // Critical paths
     if (analysis.criticalPaths.length > 0) {
         lines.push('## Critical Paths (Handle with Care)');
@@ -406,6 +440,14 @@ export function generateWindsurfRules(analysis: AnalysisResult): IDEOutput {
             }
             lines.push('');
         }
+    }
+
+    // Custom rules
+    if (analysis.customRules) {
+        lines.push('## Custom Rules');
+        lines.push('');
+        lines.push(analysis.customRules);
+        lines.push('');
     }
 
     return {
@@ -507,6 +549,14 @@ export function generateCodexRules(analysis: AnalysisResult): IDEOutput {
             }
             lines.push('');
         }
+    }
+
+    // Custom rules
+    if (analysis.customRules) {
+        lines.push('## Custom Rules');
+        lines.push('');
+        lines.push(analysis.customRules);
+        lines.push('');
     }
 
     // Project structure (useful for agents to understand the codebase)

@@ -469,4 +469,7 @@ export interface AnalysisResult {
 
   /** Whether infrastructure as code is present */
   hasInfraAsCode: boolean;
+
+  /** Custom rules provided by the user in .dotllm/rules.md */
+  customRules?: string;
 }

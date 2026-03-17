@@ -6,7 +6,7 @@
  */
 
 import { Command } from 'commander';
-import { initCommand, scanCommand } from './commands/index.js';
+import { initCommand, scanCommand, doctorCommand } from './commands/index.js';
 import type { CLIOptions } from '../types/config.js';
 
 const program = new Command();
@@ -162,6 +162,14 @@ program
       includeGit: false,
       ide: 'cursor,vscode-copilot,claude-code,antigravity,windsurf',
     });
+  });
+
+// Doctor command
+program
+  .command('doctor')
+  .description('Check project health and AI readiness')
+  .action(async () => {
+    await doctorCommand({});
   });
 
 program.parse();

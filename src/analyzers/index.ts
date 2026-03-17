@@ -26,7 +26,7 @@ import {
   inferFolderResponsibilities,
   identifyCriticalPaths,
 } from './file-tree.js';
-import { parseConfigFiles, getProjectName } from './config-parser.js';
+import { parseConfigFiles, getProjectName, getCustomRules } from './config-parser.js';
 
 /**
  * Perform complete codebase analysis
@@ -108,6 +108,7 @@ export async function analyzeCodebase(rootPath: string): Promise<AnalysisResult>
     hasCICD: hasCICDFlag,
     hasDocker: hasDockerFlag,
     hasInfraAsCode: hasInfraAsCodeFlag,
+    customRules: getCustomRules(rootPath),
   };
 }
 
@@ -119,5 +120,5 @@ export {
   inferFolderResponsibilities,
   identifyCriticalPaths,
 } from './file-tree.js';
-export { parseConfigFiles, getProjectName, getProjectDescription } from './config-parser.js';
+export { parseConfigFiles, getProjectName, getProjectDescription, getCustomRules } from './config-parser.js';
 export { detectIDE, type IDE, type IDEInfo, type IDEDetectionResult } from './ide.js';

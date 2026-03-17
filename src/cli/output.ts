@@ -148,6 +148,11 @@ export function printUpdateNotice(): void {
   );
   console.log(
     chalk.dim('│'),
+    ' • Add bespoke rules in .dotllm/rules.md                        ',
+    chalk.dim('│')
+  );
+  console.log(
+    chalk.dim('│'),
     '                                                                ',
     chalk.dim('│')
   );

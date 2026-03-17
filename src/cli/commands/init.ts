@@ -100,6 +100,11 @@ export async function initCommand(options: CLIOptions): Promise<void> {
             console.log('');
         }
 
+        if (analysis.customRules) {
+            console.log(chalk.bold('📜 Custom Rules:'), chalk.green('Detected in .dotllm/rules.md'));
+            console.log('');
+        }
+
         const ruleCount = getRuleCount(analysis);
 
         // Determine which IDEs to generate for
